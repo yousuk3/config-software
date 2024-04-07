@@ -14,13 +14,11 @@ uci delete network.wan
 uci delete network.wan6
 uci delete network.lan
 uci delete system.ntp.server
-# uci -q delete network.globals.ula_prefix
+uci -q delete network.globals.ula_prefix
 # IPV4
 
 # uci add_list network.@device[0].ports='wan'
-#uci del network.cfg030f15.ports
-#uci add_list network.cfg030f15.ports='eth0.1'
-#uci add_list network.cfg030f15.ports='eth0.2'
+uci add_list network.@device[0].ports='eth0.2'
 
 BRIDGE='lan'
 uci set network.${BRIDGE}=interface
