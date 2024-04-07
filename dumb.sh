@@ -14,7 +14,7 @@ uci delete network.wan
 uci delete network.wan6
 uci delete network.lan
 uci delete system.ntp.server
-uci -q delete network.globals.ula_prefix
+# uci -q delete network.globals.ula_prefix
 # IPV4
 
 # uci add_list network.@device[0].ports='wan'
