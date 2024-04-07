@@ -37,6 +37,10 @@ uci set network.${BRIDGE6}.device=@${BRIDGE}
 uci set network.${BRIDGE6}.reqaddress='try'
 uci set network.${BRIDGE6}.reqprefix='no'
 uci set network.${BRIDGE6}.type='bridge'
+
+uci set ttyd.@ttyd[0].interface='@lan6'
+uci set ttyd.ttyd.interface='@lan6'
+
 # 既存のワイヤレスネットワークを変更する
 uci set wireless.default_radio0.network=${BRIDGE}
 uci set wireless.default_radio1.network=${BRIDGE}
