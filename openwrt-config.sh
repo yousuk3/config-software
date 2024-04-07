@@ -64,7 +64,7 @@ do
   echo -e " \033[1;31mDownload scripts for access point\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/dumb-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/dumb-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/dumb-config.sh https://raw.githubusercontent.com/yousuk3/config-software/main/dumb-config.sh
           sh /etc/config-software/dumb-config.sh
           break ;;
     "n" ) break ;;
