@@ -79,6 +79,12 @@ rm /usr/sbin/wpa_supplicant
 # }
 # 複数の AP にわたってホスト名を表示できるようにする
 opkg update
+
+# opkg uninstall wpad-basic-mbedtls
+# opkg install wpad-openssl
+# opkg install luci-proto-batman-adv
+# opkg install luci-app-dawn
+
 opkg install fping
 opkg install arp-scan
 sed -i "/exit 0/d" /etc/rc.local
