@@ -15,7 +15,7 @@ opkg install luci-app-ttyd
 uci set ttyd.@ttyd[0]=ttyd
 uci set ttyd.@ttyd[0].interface='@lan'
 uci set ttyd.@ttyd[0].command='/bin/login -f root'
-uci set ttyd.@ttyd[0].ipv6='1'
+uci set ttyd.@ttyd[0].ipv6='0'
 uci set ttyd.@ttyd[0].debug='7'
 uci set ttyd.@ttyd[0].url_arg='1'
 uci add_list ttyd.@ttyd[0].client_option='fontSize=25'
@@ -24,7 +24,7 @@ uci add_list ttyd.@ttyd[0].client_option='titleFixed=UCI'
 uci set ttyd.ttyd=ttyd
 uci set ttyd.ttyd.port='8888'
 uci set ttyd.ttyd.interface='@lan'
-uci set ttyd.ttyd.ipv6='1'
+uci set ttyd.ttyd.ipv6='0'
 uci set ttyd.ttyd.debug='7'
 uci set ttyd.ttyd.command='confsoft'
 uci set ttyd.ttyd.url_arg='1'
