@@ -22,8 +22,21 @@ do
   read -p " gateway: " input_str_GATEWAY
   read -p " Please select key [y/n or r]: " num
   case "${num}" in
-    "y" ) _func_Dumb_confirmation ;;
+    "y" ) _func_Mesh_PASSWORD ;;
     "n" ) _func_Dumb_GATEWAY ;;
+    "r" ) break ;;
+  esac
+done
+
+function _func_Mesh_PASSWORD
+while :
+do
+  echo -e "\033[1;37m Enter mesh password\033[0;39m"
+  read -p " gateway: " input_str_PASSWORD
+  read -p " Please select key [y/n or r]: " num
+  case "${num}" in
+    "y" ) _func_Dumb_confirmation ;;
+    "n" ) _func_Mesh_PASSWORD ;;
     "r" ) break ;;
   esac
 done
@@ -34,7 +47,7 @@ do
   echo -e " \033[1;37mAccess point ----------------------------------------\033[0;39m"
   echo -e " \033[1;32mIPV4 address: ${input_str_IPV4}\033[0;39m"
   echo -e " \033[1;32mGateway: ${input_str_GATEWAY}\033[0;39m"
-  echo -e " \033[1;37mPackage: fping Size: Install 17kB\033[0;39m"
+  echo -e " \033[1;32mPassword: ${input_str_PASSWORD}\033[0;39m"
   echo -e " \033[1;37m-----------------------------------------------------\033[0;39m"
   read -p " Please select key [y/n or r]: " num
   case "${num}" in
@@ -49,6 +62,7 @@ function _func_Dumb_SET
 wget --no-check-certificate -O /etc/config-software/afterap.sh https://raw.githubusercontent.com/yousuk3/config-software/main/afterap.sh
 sed -i -e "s/IPADDR='192.168.1.2'/IPADDR='${input_str_IPV4}'/g" /etc/config-software/afterap.sh
 sed -i -e "s/GATEWAY='192.168.1.1'/GATEWAY='${input_str_GATEWAY}'/g" /etc/config-software/afterap.sh
+sed -i -e "s/PASSWORD='****'/PASSWORD='${input_str_PASSWORD}'/g" /etc/config-software/afterap.sh
 sh /etc/config-software/afterap.sh 2> /dev/null
 read -p " Press any key (to reboot the device)"
 reboot

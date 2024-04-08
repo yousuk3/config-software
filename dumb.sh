@@ -69,7 +69,7 @@ uci commit
 /etc/init.d/firewall disable
 /etc/init.d/firewall stop
 # wpa_supplicantを無効にする
-rm /usr/sbin/wpa_supplicant
+# rm /usr/sbin/wpa_supplicant
 # {
 # デーモンを永続的に無効にする
 # for i in firewall dnsmasq odhcpd; do
@@ -79,8 +79,16 @@ rm /usr/sbin/wpa_supplicant
 #   fi
 # done
 # }
-# 複数の AP にわたってホスト名を表示できるようにする
+
+# wpad,batman,dawnをインストール
 opkg update
+opkg remove wpad-basic-mbedtls
+opkg install wpad-openssl
+opkg install luci-proto-batman-adv
+opkg install luci-app-dawn
+
+# 複数の AP にわたってホスト名を表示できるようにする
+#opkg update
 opkg install fping
 opkg install arp-scan
 sed -i "/exit 0/d" /etc/rc.local
