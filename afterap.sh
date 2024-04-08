@@ -1,8 +1,8 @@
-#!/bin/sh
+#! /bin/sh
 
-IPADDR='192.168.1.2'
-GATEWAY='192.168.1.1'
-PASSWORD='****'
+#IPADDR='192.168.1.2'
+#GATEWAY='192.168.1.1'
+#PASSWORD='****'
 
 # ファイアウォールとipv6オフ
 uci del dhcp.lan.ra
@@ -13,7 +13,7 @@ uci del dhcp.lan.dns
 uci set dhcp.lan.ignore='1'
 uci del firewall.@zone[0].network
 uci del network.lan.dns
-uci set add_list network.lan.dns=${GATEWAY}
+uci set add_list network.lan.dns='192.168.3.1'
 # ワイヤレス設定
 #uci set wireless.default_radio0.dtim_period='3'
 #uci set wireless.default_radio0.encryption='psk2'
