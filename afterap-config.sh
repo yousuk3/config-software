@@ -32,7 +32,7 @@ function _func_Mesh_PASSWORD
 while :
 do
   echo -e "\033[1;37m Enter mesh password\033[0;39m"
-  read -p " gateway: " input_str_PASSWORD
+  read -p " password: " input_str_PASSWORD
   read -p " Please select key [y/n or r]: " num
   case "${num}" in
     "y" ) _func_Dumb_confirmation ;;
