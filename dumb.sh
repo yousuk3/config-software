@@ -3,6 +3,8 @@
 IPADDR='192.168.1.2'
 GATEWAY='192.168.1.1'
 
+LAN_DEVICE=`uci get network.lan.device`
+
 # ネットワークを変更する
 cp /etc/config/system /etc/config/system.dump.bak
 cp /etc/config/network /etc/config/network.dump.bak
@@ -13,7 +15,6 @@ cp /etc/config/dropbear /etc/config/dropbear.dump.bak
 uci delete network.wan
 uci delete network.wan6
 uci delete network.lan
-uci delete network.lan6
 uci delete system.ntp.server
 uci -q delete network.globals.ula_prefix
 # IPV4
@@ -24,7 +25,7 @@ uci add_list network.@device[0].ports='eth0.2'
 BRIDGE='lan'
 uci set network.${BRIDGE}=interface
 uci set network.${BRIDGE}.proto='static'
-uci set network.${BRIDGE}.device='br-lan'
+uci set network.${BRIDGE}.device=${LAN_DEVICE}
 uci set network.${BRIDGE}.ipaddr=${IPADDR}
 uci set network.${BRIDGE}.netmask='255.255.255.0'
 uci set network.${BRIDGE}.gateway=${GATEWAY}
