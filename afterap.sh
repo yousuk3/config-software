@@ -5,15 +5,15 @@ GATEWAY='192.168.1.1'
 PASSWORD='****'
 
 # ファイアウォールとipv6オフ
-uci del dhcp.lan.ra
+#uci del dhcp.lan.ra
 uci del dhcp.lan.ra_slaac
-uci del dhcp.lan.ra_flags
-uci del dhcp.lan.dhcpv6
-uci del dhcp.lan.dns
+#uci del dhcp.lan.ra_flags
+#uci del dhcp.lan.dhcpv6
+#uci del dhcp.lan.dns
 uci set dhcp.lan.ignore='1'
 uci del firewall.@zone[0].network
 uci del network.lan.dns
-uci set add_list network.lan.dns=${GATEWAY}
+uci set add_list network.lan.dns='192.168.3.1'
 # ワイヤレス設定
 #uci set wireless.default_radio0.dtim_period='3'
 #uci set wireless.default_radio0.encryption='psk2'
@@ -51,4 +51,4 @@ uci set add_list network.lan.dns=${GATEWAY}
 
 uci commit
 
-echo -e "\033[1;35m ${BRIDGE} device: br-lan\033[0;39m"
+echo -e "\033[1;35m lan device: br-lan\033[0;39m"
