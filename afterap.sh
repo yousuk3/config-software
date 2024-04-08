@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 IPADDR='192.168.1.2'
 GATEWAY='192.168.1.1'
