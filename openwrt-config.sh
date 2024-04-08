@@ -22,7 +22,7 @@ do
   echo -e " \033[1;33mDownload scripts for initial system\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/system-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/system-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/system-config.sh https://raw.githubusercontent.com/yousuk3/config-software/main/system-config.sh
           sh /etc/config-software/system-config.sh
           break ;;
     "n" ) break ;;

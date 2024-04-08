@@ -4,6 +4,7 @@ IPADDR='192.168.1.2'
 GATEWAY='192.168.1.1'
 
 # ファイアウォールとipv6オフ
+BRIDGE='lan'
 uci del dhcp.${BRIDGE}.ra
 uci del dhcp.${BRIDGE}.ra_slaac
 uci del dhcp.${BRIDGE}.ra_flags
