@@ -87,21 +87,5 @@ sed -i "/exit 0/d" /etc/rc.local
 echo "arp-scan -qxlN -I br-lan | awk '{print $1}' | xargs fping -q -c1" >> /etc/rc.local 
 echo "exit 0" >> /etc/rc.local
 echo "0 */1 * * * arp-scan -qxlN -I br-lan | awk '{print $1}' | xargs fping -q -c1" >> /etc/crontabs/root
-# wpad,batman,dawnをインストール
-opkg remove wpad-basic-mbedtls
-opkg install wpad-openssl
-opkg install luci-proto-batman-adv
-opkg install luci-app-dawn
-# ファイアウォールとipv6オフ
-uci del dhcp.${BRIDGE}.ra
-uci del dhcp.${BRIDGE}.ra_slaac
-uci del dhcp.${BRIDGE}.ra_flags
-uci del dhcp.${BRIDGE}.dhcpv6
-uci del dhcp.${BRIDGE}.dns
-uci set dhcp.${BRIDGE}.ignore='1'
-uci del firewall.@device[0].network
-uci del network.${BRIDGE}.dns
-uci set add_list network.${BRIDGE}.dns=${GATEWAY}
-uci commit
 
 echo -e "\033[1;35m ${BRIDGE} device: br-lan\033[0;39m"

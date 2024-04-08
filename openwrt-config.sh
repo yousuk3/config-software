@@ -72,6 +72,20 @@ do
 done
 }
 
+function _func_AFTERAP {
+while :
+do
+  echo -e " \033[1;31mDownload scripts for afterap\033[0;39m"
+  read -p " Please select key [y/n]: " num
+  case "${num}" in
+    "y" ) wget --no-check-certificate -O /etc/config-software/afterap-config.sh https://raw.githubusercontent.com/yousuk3/config-software/main/afterap-config.sh
+          sh /etc/config-software/afterap-config.sh
+          break ;;
+    "n" ) break ;;
+  esac
+done
+}
+
 function _func_HA {
 while :
 do
@@ -166,17 +180,19 @@ do
   echo -e " \033[1;32m[p]: Install recommended packages (automatic or selective)\033[0;39m"
   echo -e " \033[1;35m[b]: Install ad blocker and DNS encryption\033[0;39m"
   echo -e " \033[1;31m[a]: Access point connection setup (Dumb/Bridge)\033[0;39m"
+  echo -e " \033[1;31m[f]: After AP settings\033[0;31m"
   echo -e " \033[1;36m[h]: Install Home Assistant\033[0;39m"
   echo -e " \033[1;37m[e]: Other: BUTTON, IPERF3, SAMBA4, LBS, DFS Check, Guest Wi-Fi\033[0;39m"
   echo -e " \033[7;40m[q]: Quit (Delete this script or not)\033[0;39m"
   echo -e " \033[1;37m-----------------------------------------------------\033[0;39m"
-  read -p " Please select key [i/s/p/b/a/h/e or q]: " num
+  read -p " Please select key [i/s/p/b/a/f/h/e or q]: " num
   case "${num}" in
     "i" ) _func_INTERNET ;;
     "s" ) _func_SYSTEM ;;
     "p" ) _func_PACKAGE ;;
     "b" ) _func_AD_DNS ;;
     "a" ) _func_ACCESSPOINT ;;
+    "f" ) _func_AFTERAP ;;
     "h" ) _func_HA ;;
     "e" ) _func_ETC ;;
     "q" ) _func_QUIT ;;
