@@ -4,12 +4,12 @@ IPADDR='192.168.1.2'
 GATEWAY='192.168.1.1'
 
 # ネットワークを変更する
-cp /etc/config/system /etc/config/system.dump.bak
-cp /etc/config/network /etc/config/network.dump.bak
-cp /etc/config/dhcp /etc/config/dhcp.dump.bak
-cp /etc/config/firewall /etc/config/firewall.dump.bak
-cp /etc/config/wireless /etc/config/wireless.dump.bak
-cp /etc/config/dropbear /etc/config/dropbear.dump.bak
+#cp /etc/config/system /etc/config/system.dump.bak
+#cp /etc/config/network /etc/config/network.dump.bak
+#cp /etc/config/dhcp /etc/config/dhcp.dump.bak
+#cp /etc/config/firewall /etc/config/firewall.dump.bak
+#cp /etc/config/wireless /etc/config/wireless.dump.bak
+#cp /etc/config/dropbear /etc/config/dropbear.dump.bak
 uci delete network.wan
 uci delete network.wan6
 uci delete network.lan
@@ -58,16 +58,16 @@ uci set dropbear.@dropbear[0].Interface=${BRIDGE}
 uci commit
 
 # DHCPサーバーを無効にする
-/etc/init.d/odhcpd disable
-/etc/init.d/odhcpd stop
+#/etc/init.d/odhcpd disable
+#/etc/init.d/odhcpd stop
 # DNSを無効にする
-/etc/init.d/dnsmasq disable
-/etc/init.d/dnsmasq stop
+#/etc/init.d/dnsmasq disable
+#/etc/init.d/dnsmasq stop
 # ファイアウォールを無効にする
-/etc/init.d/firewall disable
-/etc/init.d/firewall stop
+#/etc/init.d/firewall disable
+#/etc/init.d/firewall stop
 # wpa_supplicantを無効にする
-rm /usr/sbin/wpa_supplicant
+#rm /usr/sbin/wpa_supplicant
 # {
 # デーモンを永続的に無効にする
 # for i in firewall dnsmasq odhcpd; do
@@ -80,15 +80,15 @@ rm /usr/sbin/wpa_supplicant
 # 複数の AP にわたってホスト名を表示できるようにする
 opkg update
 
-# opkg uninstall wpad-basic-mbedtls
-# opkg install wpad-openssl
-# opkg install luci-proto-batman-adv
-# opkg install luci-app-dawn
+opkg remove wpad-basic-mbedtls
+opkg install wpad-openssl
+opkg install luci-proto-batman-adv
+opkg install luci-app-dawn
 
-opkg install fping
-opkg install arp-scan
-sed -i "/exit 0/d" /etc/rc.local
-echo "arp-scan -qxlN -I br-lan | awk '{print $1}' | xargs fping -q -c1" >> /etc/rc.local 
-echo "exit 0" >> /etc/rc.local
-echo "0 */1 * * * arp-scan -qxlN -I br-lan | awk '{print $1}' | xargs fping -q -c1" >> /etc/crontabs/root
+#opkg install fping
+#opkg install arp-scan
+#sed -i "/exit 0/d" /etc/rc.local
+#echo "arp-scan -qxlN -I br-lan | awk '{print $1}' | xargs fping -q -c1" >> /etc/rc.local 
+#echo "exit 0" >> /etc/rc.local
+#echo "0 */1 * * * arp-scan -qxlN -I br-lan | awk '{print $1}' | xargs fping -q -c1" >> /etc/crontabs/root
 echo -e "\033[1;35m ${BRIDGE} device: br-lan\033[0;39m"
