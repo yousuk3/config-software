@@ -13,7 +13,7 @@ uci del dhcp.lan.dns
 uci set dhcp.lan.ignore='1'
 uci del firewall.@zone[0].network
 uci del network.lan.dns
-uci set add_list network.lan.dns='${GATEWAY}'
+uci set add_list network.lan.dns=${GATEWAY}
 # ワイヤレス設定
 #uci set wireless.default_radio0.dtim_period='3'
 #uci set wireless.default_radio0.encryption='psk2'
@@ -45,7 +45,7 @@ uci set add_list network.lan.dns='${GATEWAY}'
 #uci set wireless.wifinet2.mesh_id='mesh_an'
 #uci set wireless.wifinet2.mesh_fwding='0'
 #uci set wireless.wifinet2.mesh_rssi_threshold='0'
-#uci set wireless.wifinet2.key='${PASSWORD}'
+#uci set wireless.wifinet2.key=${PASSWORD}
 #uci set wireless.wifinet2.network='batmesh'
 #uci add_list network.@device[0].ports='bat0.99'
 
