@@ -1,19 +1,5 @@
 #! /bin/sh
 
-function _func_Dumb_IPV4
-while :
-do
-  echo -e "\033[1;37m Enter IPV4 address of access point\033[0;39m"
-  echo -e "\033[1;33m Example: 192.168.1.2\033[0;39m"
-  read -p " IPV4 address: " input_str_IPV4
-  read -p " Please select key [y/n or r]: " num
-  case "${num}" in
-    "y" ) _func_Dumb_GATEWAY ;;
-    "n" ) _func_Dumb_IPV4 ;;
-    "r" ) break ;;
-  esac
-done
-
 function _func_Dumb_GATEWAY
 while :
 do
@@ -45,14 +31,13 @@ function _func_Dumb_confirmation
 while :
 do
   echo -e " \033[1;37mAccess point ----------------------------------------\033[0;39m"
-  echo -e " \033[1;32mIPV4 address: ${input_str_IPV4}\033[0;39m"
   echo -e " \033[1;32mGateway: ${input_str_GATEWAY}\033[0;39m"
   echo -e " \033[1;32mPassword: ${input_str_PASSWORD}\033[0;39m"
   echo -e " \033[1;37m-----------------------------------------------------\033[0;39m"
   read -p " Please select key [y/n or r]: " num
   case "${num}" in
     "y" ) _func_Dumb_SET ;;
-    "n" ) _func_Dumb_IPV4 ;;
+    "n" ) _func_Dumb_GATEWAY ;;
     "r" ) break ;;
   esac
 done
@@ -60,9 +45,8 @@ done
 function _func_Dumb_SET
 {
 wget --no-check-certificate -O /etc/config-software/afterap.sh https://raw.githubusercontent.com/yousuk3/config-software/main/afterap.sh
-sed -i -e "s/IPADDR='192.168.1.2'/IPADDR='${input_str_IPV4}'/g" /etc/config-software/afterap.sh
 sed -i -e "s/GATEWAY='192.168.1.1'/GATEWAY='${input_str_GATEWAY}'/g" /etc/config-software/afterap.sh
-sed -i -e "s/PASSWORD='****'/PASSWORD='${input_str_PASSWORD}'/g" /etc/config-software/afterap.sh
+sed -i -e "s/PASSWORD='abcd1234'/PASSWORD='${input_str_PASSWORD}'/g" /etc/config-software/afterap.sh
 sh /etc/config-software/afterap.sh 2> /dev/null
 read -p " Press any key (to reboot the device)"
 reboot
@@ -85,7 +69,7 @@ do
   echo -e " \033[1;31m--------------------------------------------------------------\033[0;39m"
   read -p " Please select key [e or q]: " num
   case "${num}" in
-    "e" ) _func_Dumb_IPV4 ;;
+    "e" ) _func_Dumb_GATEWAY ;;
     "q" ) exit ;;
   esac
 done
