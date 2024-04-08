@@ -10,9 +10,10 @@ GATEWAY='192.168.1.1'
 #cp /etc/config/firewall /etc/config/firewall.dump.bak
 #cp /etc/config/wireless /etc/config/wireless.dump.bak
 #cp /etc/config/dropbear /etc/config/dropbear.dump.bak
-uci delete network.wan
-uci delete network.wan6
-uci delete network.lan
+#uci delete network.wan
+#uci delete network.wan6
+uci delete network.bridge
+uci delete network.bridge6
 uci delete system.ntp.server
 uci -q delete network.globals.ula_prefix
 # IPV4
