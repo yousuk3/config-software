@@ -4,16 +4,16 @@ IPADDR='192.168.1.2'
 GATEWAY='192.168.1.1'
 
 # ネットワークを変更する
-#cp /etc/config/system /etc/config/system.dump.bak
-#cp /etc/config/network /etc/config/network.dump.bak
-#cp /etc/config/dhcp /etc/config/dhcp.dump.bak
-#cp /etc/config/firewall /etc/config/firewall.dump.bak
-#cp /etc/config/wireless /etc/config/wireless.dump.bak
-#cp /etc/config/dropbear /etc/config/dropbear.dump.bak
-#uci delete network.wan
-#uci delete network.wan6
-uci delete network.bridge
-uci delete network.bridge6
+cp /etc/config/system /etc/config/system.dump.bak
+cp /etc/config/network /etc/config/network.dump.bak
+cp /etc/config/dhcp /etc/config/dhcp.dump.bak
+cp /etc/config/firewall /etc/config/firewall.dump.bak
+cp /etc/config/wireless /etc/config/wireless.dump.bak
+cp /etc/config/dropbear /etc/config/dropbear.dump.bak
+uci delete network.wan
+uci delete network.wan6
+uci delete network.lan
+uci delete network.lan6
 uci delete system.ntp.server
 uci -q delete network.globals.ula_prefix
 # IPV4
@@ -30,6 +30,16 @@ uci set network.${BRIDGE}.netmask='255.255.255.0'
 uci set network.${BRIDGE}.gateway=${GATEWAY}
 uci set network.${BRIDGE}.dns=${GATEWAY}
 uci set network.${BRIDGE}.delegate='0'
+uci del dhcp.${BRIDGE}.ra
+uci del dhcp.${BRIDGE}.ra_slaac
+uci del dhcp.${BRIDGE}.ra_flags
+uci del dhcp.${BRIDGE}.dhcpv6
+uci del dhcp.${BRIDGE}.dns
+uci set dhcp.${BRIDGE}.ignore='1'
+uci del firewall.@device[0].network
+uci del network.${BRIDGE}.dns
+uci set add_list network.${BRIDGE}.dns=${GATEWAY}
+
 # IPV6
 BRIDGE6='lan6'
 uci set network.${BRIDGE6}=interface
