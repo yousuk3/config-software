@@ -17,12 +17,11 @@ uci delete network.wan6
 uci delete network.lan
 uci delete system.ntp.server
 uci -q delete network.globals.ula_prefix
-# IPV4
-
-# uci add_list network.@device[0].ports='wan'
+# WANポート追加
+#uci add_list network.@device[0].ports='wan'
 uci add_list network.@device[0].ports='eth0.2'
-
-BRIDGE='lan'
+# IPV4
+BRIDGE='bridge'
 uci set network.${BRIDGE}=interface
 uci set network.${BRIDGE}.proto='static'
 uci set network.${BRIDGE}.device=${LAN_DEVICE}
@@ -31,19 +30,17 @@ uci set network.${BRIDGE}.netmask='255.255.255.0'
 uci set network.${BRIDGE}.gateway=${GATEWAY}
 uci set network.${BRIDGE}.dns=${GATEWAY}
 uci set network.${BRIDGE}.delegate='0'
-
 # IPV6
-BRIDGE6='lan6'
+BRIDGE6='bridge6'
 uci set network.${BRIDGE6}=interface
 uci set network.${BRIDGE6}.proto='dhcpv6'
 uci set network.${BRIDGE6}.device=@${BRIDGE}
 uci set network.${BRIDGE6}.reqaddress='try'
 uci set network.${BRIDGE6}.reqprefix='no'
 uci set network.${BRIDGE6}.type='bridge'
-
-uci set ttyd.@ttyd[0].interface='@lan6'
-uci set ttyd.ttyd.interface='@lan6'
-
+# TTYD setup
+uci set ttyd.@ttyd[0].interface=@${BRIDGE6}
+uci set ttyd.ttyd.interface=@${BRIDGE6}
 # 既存のワイヤレスネットワークを変更する
 uci set wireless.default_radio0.network=${BRIDGE}
 uci set wireless.default_radio1.network=${BRIDGE}
@@ -70,7 +67,7 @@ uci commit
 /etc/init.d/firewall disable
 /etc/init.d/firewall stop
 # wpa_supplicantを無効にする
-# rm /usr/sbin/wpa_supplicant
+rm /usr/sbin/wpa_supplicant
 # {
 # デーモンを永続的に無効にする
 # for i in firewall dnsmasq odhcpd; do
@@ -86,7 +83,6 @@ opkg update
 opkg remove wpad-basic-mbedtls
 opkg install wpad-openssl
 opkg install luci-proto-batman-adv
-opkg install luci-app-dawn
 
 # 複数の AP にわたってホスト名を表示できるようにする
 #opkg update

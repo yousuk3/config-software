@@ -1,19 +1,18 @@
 #! /bin/sh
 
-#IPADDR='192.168.1.2'
 GATEWAY='192.168.1.1'
 PASSWORD='abcd1234'
 
 # ファイアウォールとipv6オフ
-uci del dhcp.lan.ra
-uci del dhcp.lan.ra_slaac
-uci del dhcp.lan.ra_flags
-uci del dhcp.lan.dhcpv6
-uci del dhcp.lan.dns
-uci set dhcp.lan.ignore='1'
-uci del firewall.@zone[0].network
-uci del network.lan.dns
-uci set add_list network.lan.dns=${GATEWAY}
+#uci del dhcp.lan.ra
+#uci del dhcp.lan.ra_slaac
+#uci del dhcp.lan.ra_flags
+#uci del dhcp.lan.dhcpv6
+#uci del dhcp.lan.dns
+#uci set dhcp.lan.ignore='1'
+#uci del firewall.@zone[0].network
+#uci del network.lan.dns
+#uci set add_list network.lan.dns=${GATEWAY}
 # ワイヤレス設定
 uci set wireless.default_radio0.dtim_period='3'
 uci set wireless.default_radio0.encryption='psk2'
@@ -26,8 +25,6 @@ uci set wireless.default_radio0.bss_transition='1'
 uci set wireless.radio1.txpower='5'
 uci set wireless.default_radio1.dtim_period='3'
 uci set wireless.default_radio1.encryption='psk2'
-uci set wireless.default_radio1.ieee80211l='1'
-uci set wireless.default_radio1.bss_transition='1'
 # batman設定
 uci set network.bat0=interface
 uci set network.bat0.proto='batadv'
