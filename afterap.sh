@@ -30,6 +30,7 @@ uci set network.bat0_hardif_mesh1.proto='batadv_hardif'
 uci set network.bat0_hardif_mesh1.master='bat0'
 uci set network.bat0_hardif_mesh1.mtu='1536'
 uci set network.bat0_hardif_eth0=interface
+uci set network.bat0_hardif_eth0.disable='1'
 uci set network.bat0_hardif_eth0.proto='batadv_hardif'
 uci set network.bat0_hardif_eth0.master='bat0'
 uci set network.bat0_hardif_eth0.mtu='1536'
