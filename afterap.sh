@@ -3,16 +3,6 @@
 GATEWAY='192.168.1.1'
 PASSWORD='abcd1234'
 
-# ワイヤレス設定
-uci set wireless.default_radio0.dtim_period='3'
-uci set wireless.default_radio0.encryption='psk2'
-uci set wireless.default_radio0.ieee80211r='1'
-uci set wireless.default_radio0.mobility_domain='6781'
-uci set wireless.default_radio0.ft_over_ds='0'
-uci set wireless.default_radio0.ft_psk_generate_local='1'
-uci set wireless.radio1.txpower='5'
-uci set wireless.default_radio1.dtim_period='3'
-uci set wireless.default_radio1.encryption='psk2'
 # batman設定
 uci set network.bat0=interface
 uci set network.bat0.proto='batadv'

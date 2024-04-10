@@ -44,6 +44,16 @@ uci set ttyd.ttyd.interface=@${BRIDGE6}
 # 既存のワイヤレスネットワークを変更する
 uci set wireless.default_radio0.network=${BRIDGE}
 uci set wireless.default_radio1.network=${BRIDGE}
+# ワイヤレス設定
+uci set wireless.default_radio0.dtim_period='3'
+uci set wireless.default_radio0.encryption='psk2'
+uci set wireless.default_radio0.ieee80211r='1'
+uci set wireless.default_radio0.mobility_domain='6781'
+uci set wireless.default_radio0.ft_over_ds='0'
+uci set wireless.default_radio0.ft_psk_generate_local='1'
+uci set wireless.radio1.txpower='5'
+uci set wireless.default_radio1.dtim_period='3'
+uci set wireless.default_radio1.encryption='psk2'
 # NTPサーバー
 uci set system.ntp=timeserver
 uci set system.ntp.enable_server='0'
