@@ -17,19 +17,19 @@ uci delete network.wan6
 uci delete network.lan
 uci delete system.ntp.server
 uci -q delete network.globals.ula_prefix
-# Add WAN port WSR2533DHP2
-Add_WAN_port_WSR2533DHP2=`grep 'mediatek' /etc/openwrt_release`
-if [ "${Add_WAN_port_WSR2533DHP2:16:8}" = "mediatek" ]; then
- uci add_list network.@device[0].ports='eth0.2'
-fi
-# Add WAN port MR52
-# Add_WAN_port_MR52=`grep 'ipq806x' /etc/openwrt_release`
-# if [ "${Add_WAN_port_MR52:16:7}" = "ipq806x" ]; then
-#  uci add_list network.@device[0].ports='eth0.2'
-# fi
 # IPV4
 
-# uci add_list network.@device[0].ports='wan'
+#uci add_list network.@device[0].ports='wan'
+# ADD WAN PORT WSR2533DHP2
+ADD_WAN_PORT_WSR2533DHP2=`grep 'mediatek' /etc/openwrt_release`
+if [ "${ADD_WAN_PORT_WSR2533DHP2:16:8}" = "mediatek" ]; then
+ uci add_list network.@device[0].ports='eth0.2'
+fi
+# ADD WAN PORT MR52
+#ADD_WAN_PORT_MR52=`grep 'ipq806x' /etc/openwrt_release`
+#if [ "${ADD_WAN_PORT_MR52:16:7}" = "ipq806x" ]; then
+# uci add_list network.@device[0].ports='eth0.2'
+#fi
 
 BRIDGE='bridge'
 uci set network.${BRIDGE}=interface
@@ -56,9 +56,13 @@ uci set system.ntp=timeserver
 uci set system.ntp.enable_server='0'
 uci set system.ntp.use_dhcp='1'
 uci set system.ntp.server=${GATEWAY}
+# TTYD setup
+#uci set ttyd.@ttyd[0].interface=@${BRIDGE6}
+#uci set ttyd.ttyd.interface=@${BRIDGE6}
 # マルチキャスト
 uci set network.globals.packet_steering='1'
-uci set network.globals.igmp_snooping='1'
+#uci set network.globals.igmp_snooping='1'
+uci set network.@device[0].igmp_snooping='1'
 #
 uci set dropbear.@dropbear[0].Interface=${BRIDGE}
 
@@ -74,7 +78,7 @@ uci commit
 /etc/init.d/firewall disable
 /etc/init.d/firewall stop
 # wpa_supplicantを無効にする
-# rm /usr/sbin/wpa_supplicant
+#rm /usr/sbin/wpa_supplicant
 # {
 # デーモンを永続的に無効にする
 # for i in firewall dnsmasq odhcpd; do
