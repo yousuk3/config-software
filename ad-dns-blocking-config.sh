@@ -7,7 +7,7 @@ do
   echo -e " \033[1;34mDownload AdGuard HOME configuration script\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/adguard-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/adguard-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/adguard-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/adguard-config.sh
           sh /etc/config-software/adguard-config.sh
           break ;;
     "n" ) break ;;
@@ -21,7 +21,7 @@ do
   echo -e " \033[1;32mDownload AdBlock configuration script\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/adblock-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/adblock-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/adblock-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/adblock-config.sh
           sh /etc/config-software/adblock-config.sh
           break ;;
     "n" ) break ;;
@@ -35,7 +35,7 @@ do
   echo -e " \033[1;32mDNS over HTTPS（DoH）Download configuration script\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/doh.sh https://raw.githubusercontent.com/site-u2023/config-software/main/doh.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/doh.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/doh.sh
           sh /etc/config-software/doh.sh
           break ;;
     "n" ) break ;;
@@ -49,7 +49,7 @@ do
   echo -e " \033[1;32mDNS over TLS（DoT）Download configuration script\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/dot.sh https://raw.githubusercontent.com/site-u2023/config-software/main/dot.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/dot.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/dot.sh
           sh /etc/config-software/dot.sh
           break ;;
     "n" ) break ;;
