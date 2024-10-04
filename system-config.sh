@@ -32,7 +32,7 @@ function _func_COUNTRY {
 if [ ! -z ${WIFI_NO_A} ] || [ ! -z ${WIFI_NO_B} ] || [ ! -z ${WIFI_NO_C} ]; then
 while :
 do
-  wget --no-check-certificate -O /etc/config-software/country_codes.txt https://raw.githubusercontent.com/site-u2023/config-software/main/country_codes.txt
+  wget --no-check-certificate -O /etc/config-software/country_codes.txt https://raw.githubusercontent.com/yousuk3/config-software/custom1/country_codes.txt
   cat /etc/config-software/country_codes.txt
   echo -e " \033[1;35mPlease enter Wi-Fi Country Code\033[0;39m"
   echo -e " \033[1;37mExample: JP\033[0;39m"
@@ -348,7 +348,7 @@ done
 }
 
 function _func_DEVICE_SET {
-  wget --no-check-certificate -O /etc/config-software/system.sh https://raw.githubusercontent.com/site-u2023/config-software/main/system.sh
+  wget --no-check-certificate -O /etc/config-software/system.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/system.sh
   if [ "$input_str_COUNTRY" = "JP" ]; then
   sed -i -e "s|UTC|Asia/Tokyo|g" /etc/config-software/system.sh
   fi
@@ -449,7 +449,7 @@ function _func_DEVICE_SET {
   uci commit wireless
   fi
   if [ "$ZZDFS" = "on" ]; then
-  wget --no-check-certificate -O /etc/config-software/zzdfs-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/zzdfs-config.sh
+  wget --no-check-certificate -O /etc/config-software/zzdfs-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/zzdfs-config.sh
   sh /etc/config-software/zzdfs-config.sh 2> /dev/null
   service zzdfs enable
   fi
@@ -458,7 +458,7 @@ function _func_DEVICE_SET {
   opkg install bash
   opkg install qrencode
   opkg install at
-  wget --no-check-certificate -O /etc/config-software/guest.sh https://raw.githubusercontent.com/site-u2023/config-software/main/guest.sh
+  wget --no-check-certificate -O /etc/config-software/guest.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/guest.sh
   bash /etc/config-software/guest.sh 2> /dev/null
   service guest_wifi enable
   fi

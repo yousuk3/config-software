@@ -9,7 +9,7 @@ do
   echo -e " \033[7;33mJapanese specification\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/internet-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/internet-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/internet-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/internet-config.sh
           sh /etc/config-software/internet-config.sh
           break ;;
     "n" ) break ;;
@@ -23,7 +23,7 @@ do
   echo -e " \033[1;33mDownload scripts for initial system\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/system-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/system-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/system-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/system-config.sh
           sh /etc/config-software/system-config.sh
           break ;;
     "n" ) break ;;
@@ -37,7 +37,7 @@ do
   echo -e " \033[1;32mDownload script for package setup (automatic or selective)\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/package-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/package-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/package-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/package-config.sh
           sh /etc/config-software/package-config.sh
           break ;;
     "n" ) break ;;
@@ -51,7 +51,7 @@ do
   echo -e " \033[1;35mDownload scripts for ad blocker and DNS encryption\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/ad-dns-blocking-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/ad-dns-blocking-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/ad-dns-blocking-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/ad-dns-blocking-config.sh
           sh /etc/config-software/ad-dns-blocking-config.sh
           break ;;
     "n" ) break ;;
@@ -65,7 +65,7 @@ do
   echo -e " \033[1;31mDownload scripts for access point\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/dumb-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/dumb-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/dumb-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/dumb-config.sh
           sh /etc/config-software/dumb-config.sh
           break ;;
     "n" ) break ;;
@@ -79,7 +79,7 @@ do
   echo -e " \033[1;36mDownload scripts for Home Assistant\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/homeassistant.sh https://raw.githubusercontent.com/site-u2023/config-software/main/homeassistant.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/homeassistant.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/homeassistant.sh
           sh /etc/config-software/homeassistant.sh
           break ;;
     "n" ) break ;;
@@ -93,7 +93,7 @@ do
   echo -e " \033[1;37mDownload other scripts\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/etc-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/etc-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/etc-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/etc-config.sh
           sh /etc/config-software/etc-config.sh
           break ;;
     "n" ) break ;;
