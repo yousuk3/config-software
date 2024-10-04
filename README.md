@@ -16,7 +16,7 @@ In MacOS Terminal, use ssh-keygen -R 192.168.xx.xx
 
 - ttyd.sh
 ```sh:SSH
-mkdir -p /etc/opwrt-config; wget --no-check-certificate -O /etc/opwrt-config/ttyd.sh https://raw.githubusercontent.com/yousuk3/opwrt-config/main/ttyd.sh; sh /etc/opwrt-config/ttyd.sh
+mkdir -p /etc/config-software; wget --no-check-certificate -O /etc/config-software/ttyd.sh https://raw.githubusercontent.com/yousuk3/opwrt-config/custom1/ttyd.sh; sh /etc/config-software/ttyd.sh
 
 ```
 
