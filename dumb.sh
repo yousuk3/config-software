@@ -17,9 +17,19 @@ uci delete network.wan6
 uci delete network.lan
 uci delete system.ntp.server
 uci -q delete network.globals.ula_prefix
+# Add WAN port WSR2533DHP2
+Add_WAN_port_WSR2533DHP2=`grep 'mediatek' /etc/openwrt_release`
+if [ "${Add_WAN_port_WSR2533DHP2:16:8}" = "mediatek" ]; then
+ uci add_list network.@device[0].ports='eth0.2'
+fi
+# Add WAN port MR52
+# Add_WAN_port_MR52=`grep 'ipq806x' /etc/openwrt_release`
+# if [ "${Add_WAN_port_MR52:16:7}" = "ipq806x" ]; then
+#  uci add_list network.@device[0].ports='eth0.2'
+# fi
 # IPV4
 
-uci add_list network.@device[0].ports='wan'
+# uci add_list network.@device[0].ports='wan'
 
 BRIDGE='bridge'
 uci set network.${BRIDGE}=interface
@@ -64,7 +74,7 @@ uci commit
 /etc/init.d/firewall disable
 /etc/init.d/firewall stop
 # wpa_supplicantを無効にする
-rm /usr/sbin/wpa_supplicant
+# rm /usr/sbin/wpa_supplicant
 # {
 # デーモンを永続的に無効にする
 # for i in firewall dnsmasq odhcpd; do

@@ -87,14 +87,19 @@ uci set wireless.${RADIO_A}.txpower='10'
 uci set wireless.${RADIO_A}.frag='2347'
 uci set wireless.${RADIO_A}.rts='2346'
 uci set wireless.${RADIO_A}.cell_density='1'
-uci set wireless.default_${RADIO_A}.encryption='sae-mixed'
+uci set wireless.default_${RADIO_A}.encryption='psk2'
 uci set wireless.default_${RADIO_A}.ssid=${WIFI_SSID_A}
 uci set wireless.default_${RADIO_A}.key=${WIFI_PASSWORD_A}
-uci set wireless.default_${RADIO_A}.multicast_to_unicast='1'
-uci set wireless.default_${RADIO_A}.isolate='1'
+# uci set wireless.default_${RADIO_A}.multicast_to_unicast='1'
+# uci set wireless.default_${RADIO_A}.isolate='1'
 uci set wireless.default_${RADIO_A}.multicast_to_unicast_all='1'
 uci set wireless.default_${RADIO_A}.macaddr='random' # Random Mac Address
 # uci set wireless.default_${RADIO_A}.wpa_disable_eapol_key_retries='1'
+uci set wireless.default_${RADIO_A}.dtim_period='3'
+uci set wireless.default_${RADIO_A}.ieee80211r='1'
+uci set wireless.default_${RADIO_A}.mobility_domain='6781'
+uci set wireless.default_${RADIO_A}.ft_over_ds='0'
+uci set wireless.default_${RADIO_A}.ft_psk_generate_local='1'
 # Wi-Fi AA channels
 RADIO_AA='radio'
 WIFI_SSID_AA='SSID_AA'
@@ -105,14 +110,19 @@ uci set wireless.${RADIO_AA}.txpower='10'
 uci set wireless.${RADIO_AA}.frag='2347'
 uci set wireless.${RADIO_AA}.rts='2346'
 uci set wireless.${RADIO_AA}.cell_density='1'
-uci set wireless.default_${RADIO_AA}.encryption='sae-mixed'
+uci set wireless.default_${RADIO_AA}.encryption='psk2'
 uci set wireless.default_${RADIO_AA}.ssid=${WIFI_SSID_AA}
 uci set wireless.default_${RADIO_AA}.key=${WIFI_PASSWORD_AA}
-uci set wireless.default_${RADIO_AA}.multicast_to_unicast='1'
-uci set wireless.default_${RADIO_AA}.isolate='1'
+# uci set wireless.default_${RADIO_AA}.multicast_to_unicast='1'
+# uci set wireless.default_${RADIO_AA}.isolate='1'
 uci set wireless.default_${RADIO_AA}.multicast_to_unicast_all='1'
 uci set wireless.default_${RADIO_AA}.macaddr='random' # Random Mac Address
 # uci set wireless.default_${RADIO_AA}.wpa_disable_eapol_key_retries='1'
+uci set wireless.default_${RADIO_AA}.dtim_period='3'
+uci set wireless.default_${RADIO_AA}.ieee80211r='1'
+uci set wireless.default_${RADIO_AA}.mobility_domain='6781'
+uci set wireless.default_${RADIO_AA}.ft_over_ds='0'
+uci set wireless.default_${RADIO_AA}.ft_psk_generate_local='1'
 # Wi-Fi B channel
 RADIO_B='radio'
 WIFI_SSID_B='SSID_B'
@@ -123,14 +133,19 @@ uci set wireless.${RADIO_B}.txpower='10'
 uci set wireless.${RADIO_B}.frag='2347'
 uci set wireless.${RADIO_B}.rts='2346'
 uci set wireless.${RADIO_B}.cell_density='1'
-uci set wireless.default_${RADIO_B}.encryption='sae-mixed'
+uci set wireless.default_${RADIO_B}.encryption='psk2'
 uci set wireless.default_${RADIO_B}.ssid=${WIFI_SSID_B}
 uci set wireless.default_${RADIO_B}.key=${WIFI_PASSWORD_B}
-uci set wireless.default_${RADIO_B}.multicast_to_unicast='1'
-uci set wireless.default_${RADIO_B}.isolate='1'
+# uci set wireless.default_${RADIO_B}.multicast_to_unicast='1'
+# uci set wireless.default_${RADIO_B}.isolate='1'
 uci set wireless.default_${RADIO_B}.multicast_to_unicast_all='1'
 uci set wireless.default_${RADIO_B}.macaddr='random' # Random Mac Address
 # uci set wireless.default_${RADIO_B}.wpa_disable_eapol_key_retries='1'
+uci set wireless.default_${RADIO_B}.dtim_period='3'
+uci set wireless.default_${RADIO_B}.ieee80211r='1'
+uci set wireless.default_${RADIO_B}.mobility_domain='6781'
+uci set wireless.default_${RADIO_B}.ft_over_ds='0'
+uci set wireless.default_${RADIO_B}.ft_psk_generate_local='1'
 # Wi-Fi BB channel
 RADIO_BB='radio'
 WIFI_SSID_BB='SSID_BB'
@@ -141,14 +156,19 @@ uci set wireless.${RADIO_BB}.txpower='10'
 uci set wireless.${RADIO_BB}.frag='2347'
 uci set wireless.${RADIO_BB}.rts='2346'
 uci set wireless.${RADIO_BB}.cell_density='1'
-uci set wireless.default_${RADIO_BB}.encryption='sae-mixed'
+uci set wireless.default_${RADIO_BB}.encryption='psk2'
 uci set wireless.default_${RADIO_BB}.ssid=${WIFI_SSID_BB}
 uci set wireless.default_${RADIO_BB}.key=${WIFI_PASSWORD_BB}
-uci set wireless.default_${RADIO_BB}.multicast_to_unicast='1'
-uci set wireless.default_${RADIO_BB}.isolate='1'
+# uci set wireless.default_${RADIO_BB}.multicast_to_unicast='1'
+# uci set wireless.default_${RADIO_BB}.isolate='1'
 uci set wireless.default_${RADIO_BB}.multicast_to_unicast_all='1'
 uci set wireless.default_${RADIO_BB}.macaddr='random' # Random Mac Address
 # uci set wireless.default_${RADIO_BB}.wpa_disable_eapol_key_retries='1'
+uci set wireless.default_${RADIO_BB}.dtim_period='3'
+uci set wireless.default_${RADIO_BB}.ieee80211r='1'
+uci set wireless.default_${RADIO_BB}.mobility_domain='6781'
+uci set wireless.default_${RADIO_BB}.ft_over_ds='0'
+uci set wireless.default_${RADIO_BB}.ft_psk_generate_local='1'
 # Wi-Fi C channel
 RADIO_C='radio'
 WIFI_SSID_C='SSID_C'
@@ -159,14 +179,19 @@ uci set wireless.${RADIO_C}.txpower='10'
 uci set wireless.${RADIO_C}.frag='2347'
 uci set wireless.${RADIO_C}.rts='2346'
 uci set wireless.${RADIO_C}.cell_density='1'
-uci set wireless.default_${RADIO_C}.encryption='sae-mixed'
+uci set wireless.default_${RADIO_C}.encryption='psk2'
 uci set wireless.default_${RADIO_C}.ssid=${WIFI_SSID_C}
 uci set wireless.default_${RADIO_C}.key=${WIFI_PASSWORD_C}
-uci set wireless.default_${RADIO_C}.multicast_to_unicast='1'
-uci set wireless.default_${RADIO_C}.isolate='1'
+# uci set wireless.default_${RADIO_C}.multicast_to_unicast='1'
+# uci set wireless.default_${RADIO_C}.isolate='1'
 uci set wireless.default_${RADIO_C}.multicast_to_unicast_all='1'
 uci set wireless.default_${RADIO_C}.macaddr='random' # Random Mac Address
 # uci set wireless.default_${RADIO_C}.wpa_disable_eapol_key_retries='1'
+uci set wireless.default_${RADIO_C}.dtim_period='3'
+uci set wireless.default_${RADIO_C}.ieee80211r='1'
+uci set wireless.default_${RADIO_C}.mobility_domain='6781'
+uci set wireless.default_${RADIO_C}.ft_over_ds='0'
+uci set wireless.default_${RADIO_C}.ft_psk_generate_local='1'
 # Wi-Fi CC channel
 RADIO_CC='radio'
 WIFI_SSID_CC='SSID_CC'
@@ -177,14 +202,19 @@ uci set wireless.${RADIO_CC}.txpower='10'
 uci set wireless.${RADIO_CC}.frag='2347'
 uci set wireless.${RADIO_CC}.rts='2346'
 uci set wireless.${RADIO_CC}.cell_density='1'
-uci set wireless.default_${RADIO_CC}.encryption='sae-mixed'
+uci set wireless.default_${RADIO_CC}.encryption='psk2'
 uci set wireless.default_${RADIO_CC}.ssid=${WIFI_SSID_CC}
 uci set wireless.default_${RADIO_CC}.key=${WIFI_PASSWORD_CC}
-uci set wireless.default_${RADIO_CC}.multicast_to_unicast='1'
-uci set wireless.default_${RADIO_CC}.isolate='1'
+# uci set wireless.default_${RADIO_CC}.multicast_to_unicast='1'
+# uci set wireless.default_${RADIO_CC}.isolate='1'
 uci set wireless.default_${RADIO_CC}.multicast_to_unicast_all='1'
 uci set wireless.default_${RADIO_CC}.macaddr='random' # Random Mac Address
 # uci set wireless.default_${RADIO_C}.wpa_disable_eapol_key_retries='1'
+uci set wireless.default_${RADIO_CC}.dtim_period='3'
+uci set wireless.default_${RADIO_CC}.ieee80211r='1'
+uci set wireless.default_${RADIO_CC}.mobility_domain='6781'
+uci set wireless.default_${RADIO_CC}.ft_over_ds='0'
+uci set wireless.default_${RADIO_CC}.ft_psk_generate_local='1'
 # set
 uci delete wireless.${RADIO_A}.disabled
 uci delete wireless.${RADIO_AA}.disabled
@@ -203,5 +233,5 @@ uci commit luci
 # /etc/init.d/rpcd reload
 
 # CRON (reboot)
-echo "00 04 * * * sleep 70 && touch /etc/banner && reboot" >> /etc/crontabs/root
+echo "00 04 * * 0 sleep 70 && touch /etc/banner && reboot" >> /etc/crontabs/root
 # /etc/init.d/cron restart

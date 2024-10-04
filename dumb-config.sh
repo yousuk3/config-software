@@ -46,7 +46,7 @@ done
 
 function _func_Dumb_SET
 {
-wget --no-check-certificate -O /etc/config-software/dumb.sh https://raw.githubusercontent.com/site-u2023/config-software/main/dumb.sh
+wget --no-check-certificate -O /etc/config-software/dumb.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/dumb.sh
 sed -i -e "s/IPADDR='192.168.1.2'/IPADDR='${input_str_IPV4}'/g" /etc/config-software/dumb.sh
 sed -i -e "s/GATEWAY='192.168.1.1'/GATEWAY='${input_str_GATEWAY}'/g" /etc/config-software/dumb.sh
 sh /etc/config-software/dumb.sh 2> /dev/null
