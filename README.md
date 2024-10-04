@@ -16,7 +16,7 @@ In MacOS Terminal, use ssh-keygen -R 192.168.xx.xx
 
 - ttyd.sh
 ```sh:SSH
-mkdir -p /etc/config-software; wget --no-check-certificate -O /etc/config-software/ttyd.sh https://raw.githubusercontent.com/yousuk3/opwrt-config/custom1/ttyd.sh; sh /etc/config-software/ttyd.sh
+mkdir -p /etc/config-software; wget --no-check-certificate -O /etc/config-software/ttyd.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/ttyd.sh; sh /etc/config-software/ttyd.sh
 
 ```
 
@@ -40,7 +40,7 @@ confsoft
 
 ### Remove
 ```sh :SSH
-rm -rf /etc/opwrt-config
+rm -rf /etc/config-software
 rm -rf /usr/bin/confsoft
 
 ```
