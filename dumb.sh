@@ -41,13 +41,13 @@ uci set network.${BRIDGE}.ipaddr=${IPADDR}
 uci set network.${BRIDGE}.netmask='255.255.255.0'
 uci set network.${BRIDGE}.gateway=${GATEWAY}
 uci set network.${BRIDGE}.dns=${GATEWAY}
-#uci set network.${BRIDGE}.delegate='0'
+uci set network.${BRIDGE}.delegate='0'
 # IPV6
 BRIDGE6='bridge6'
 uci set network.${BRIDGE6}=interface
 uci set network.${BRIDGE6}.proto='dhcpv6'
 uci set network.${BRIDGE6}.device=@${BRIDGE}
-#uci set network.${BRIDGE6}.reqaddress='try'
+uci set network.${BRIDGE6}.reqaddress='try'
 uci set network.${BRIDGE6}.reqprefix='no'
 #uci set network.${BRIDGE6}.type='bridge'
 # 既存のワイヤレスネットワークを変更する
