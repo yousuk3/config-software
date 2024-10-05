@@ -245,5 +245,5 @@ uci commit luci
 # /etc/init.d/rpcd reload
 
 # CRON (reboot)
-echo "00 04 * * 0 sleep 70 && touch /etc/banner && reboot" >> /etc/crontabs/root
+echo "00 04 * * * sleep 70 && touch /etc/banner && reboot" >> /etc/crontabs/root
 # /etc/init.d/cron restart
