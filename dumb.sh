@@ -20,10 +20,10 @@ uci -q delete network.globals.ula_prefix
 # IPV4
 
 # ADD WAN PORT WSR2533DHP2
-#ADD_WAN_PORT_WSR2533DHP2=`grep 'mediatek' /etc/openwrt_release`
-#if [ "${ADD_WAN_PORT_WSR2533DHP2:16:8}" = "mediatek" ]; then
-# uci add_list network.@device[0].ports='eth0.2'
-#fi
+ADD_WAN_PORT_WSR2533DHP2=`grep 'mediatek' /etc/openwrt_release`
+if [ "${ADD_WAN_PORT_WSR2533DHP2:16:8}" = "mediatek" ]; then
+ uci add_list network.@device[0].ports='eth0.2'
+fi
 
 # ADD WAN PORT MR52
 #ADD_WAN_PORT_MR52=`grep 'ipq806x' /etc/openwrt_release`
