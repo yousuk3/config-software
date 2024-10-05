@@ -6,7 +6,7 @@ do
   echo -e " \033[1;34mDownload button configuration and installation scripts\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/button-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/button-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/button-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/button-config.sh
           sh /etc/config-software/button-config.sh
           break ;;
     "n" ) break ;;
@@ -21,7 +21,7 @@ do
   echo -e " \033[1;33mDUMP not supported\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/init.d/iperf3 https://raw.githubusercontent.com/site-u2023/iperf/main/iperf3
+    "y" ) wget --no-check-certificate -O /etc/init.d/iperf3 https://raw.githubusercontent.com/yousuk3/iperf/custom1/iperf3
           chmod +x /etc/init.d/iperf3
           opkg update
           opkg install iperf3
@@ -89,7 +89,7 @@ do
   echo -e " \033[1;34m[b]: ZZDFS\033[0;39m"
   read -p " Please select key [d or n]: " num
   case "${num}" in
-    "d" ) wget --no-check-certificate -O /etc/config-software/zzdfs-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/zzdfs-config.sh
+    "d" ) wget --no-check-certificate -O /etc/config-software/zzdfs-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/zzdfs-config.sh
           sh /etc/config-software/zzdfs-config.sh 2> /dev/null
           service dfs_check enable
           service dfs_check start
@@ -114,7 +114,7 @@ do
           opkg install openssl-util
           opkg install qrencode
           opkg install at
-          wget --no-check-certificate -O /etc/config-software/guest.sh https://raw.githubusercontent.com/site-u2023/config-software/main/guest.sh
+          wget --no-check-certificate -O /etc/config-software/guest.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/guest.sh
           bash /etc/config-software/guest.sh 2> /dev/null
           service wifi_guest start
           HOSTMANE=`uci get system.@system[0].hostname`

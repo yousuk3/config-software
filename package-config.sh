@@ -8,7 +8,7 @@ do
   echo -e " \033[1;34Download automatic full installation scripts\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/package-auto.sh https://raw.githubusercontent.com/site-u2023/config-software/main/package-auto.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/package-auto.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/package-auto.sh
           sh /etc/config-software/package-auto.sh
           break ;;
     "n" ) break ;;
@@ -22,7 +22,7 @@ do
   echo -e " \033[1;33mDownload selective installation scripts\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/package-manual.sh https://raw.githubusercontent.com/site-u2023/config-software/main/package-manual.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/package-manual.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/package-manual.sh
           sh /etc/config-software/package-manual.sh
           break ;;
     "n" ) break ;;
@@ -36,7 +36,7 @@ do
   echo -e " \033[1;31mDownload and run script to confirm installed package after flashing\033[0;39m"
   read -p " Please select key [y/n]: " num
   case "${num}" in
-    "y" ) wget --no-check-certificate -O /etc/config-software/install-config.sh https://raw.githubusercontent.com/site-u2023/config-software/main/install-config.sh
+    "y" ) wget --no-check-certificate -O /etc/config-software/install-config.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/install-config.sh
           sh /etc/config-software/install-config.sh
           read -p " Press any key"
           break ;;

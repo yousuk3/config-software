@@ -19,17 +19,19 @@ uci delete system.ntp.server
 uci -q delete network.globals.ula_prefix
 # IPV4
 
-#uci add_list network.@device[0].ports='wan'
 # ADD WAN PORT WSR2533DHP2
-ADD_WAN_PORT_WSR2533DHP2=`grep 'mediatek' /etc/openwrt_release`
-if [ "${ADD_WAN_PORT_WSR2533DHP2:16:8}" = "mediatek" ]; then
- uci add_list network.@device[0].ports='eth0.2'
-fi
+#ADD_WAN_PORT_WSR2533DHP2=`grep 'mediatek' /etc/openwrt_release`
+#if [ "${ADD_WAN_PORT_WSR2533DHP2:16:8}" = "mediatek" ]; then
+# uci add_list network.@device[0].ports='eth0.2'
+#fi
+
 # ADD WAN PORT MR52
 #ADD_WAN_PORT_MR52=`grep 'ipq806x' /etc/openwrt_release`
 #if [ "${ADD_WAN_PORT_MR52:16:7}" = "ipq806x" ]; then
 # uci add_list network.@device[0].ports='eth0.2'
 #fi
+
+#uci add_list network.@device[0].ports='wan'
 
 BRIDGE='bridge'
 uci set network.${BRIDGE}=interface
@@ -39,15 +41,15 @@ uci set network.${BRIDGE}.ipaddr=${IPADDR}
 uci set network.${BRIDGE}.netmask='255.255.255.0'
 uci set network.${BRIDGE}.gateway=${GATEWAY}
 uci set network.${BRIDGE}.dns=${GATEWAY}
-uci set network.${BRIDGE}.delegate='0'
+#uci set network.${BRIDGE}.delegate='0'
 # IPV6
 BRIDGE6='bridge6'
 uci set network.${BRIDGE6}=interface
 uci set network.${BRIDGE6}.proto='dhcpv6'
 uci set network.${BRIDGE6}.device=@${BRIDGE}
-uci set network.${BRIDGE6}.reqaddress='try'
+#uci set network.${BRIDGE6}.reqaddress='try'
 uci set network.${BRIDGE6}.reqprefix='no'
-uci set network.${BRIDGE6}.type='bridge'
+#uci set network.${BRIDGE6}.type='bridge'
 # 既存のワイヤレスネットワークを変更する
 uci set wireless.default_radio0.network=${BRIDGE}
 uci set wireless.default_radio1.network=${BRIDGE}
@@ -77,7 +79,7 @@ uci commit
 # ファイアウォールを無効にする
 /etc/init.d/firewall disable
 /etc/init.d/firewall stop
-# wpa_supplicantを無効にする
+# wpa_supplicantを無効にする(STA WiFiインターフェースがない場合)
 #rm /usr/sbin/wpa_supplicant
 # {
 # デーモンを永続的に無効にする
