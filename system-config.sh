@@ -361,10 +361,9 @@ function _func_DEVICE_SET {
   sed -i -e "s|JST-9|HKT-8|g" /etc/config-software/system.sh
   fi
   if [ "$input_str_COUNTRY" = "US" ]; then
-  echo -e " \033[1;37mYou probably live in Hawaii\033[0;39m"
+  echo -e " \033[1;37mYou probably live in Japan\033[0;39m"
   echo -e " \033[1;37mPlease change to your local time zone\033[0;39m"
-  sed -i -e "s|UTC|Pacific/Honolulu|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|HST10|g" /etc/config-software/system.sh
+  sed -i -e "s|UTC|Asia/Tokyo|g" /etc/config-software/system.sh
   fi
   if [ "$input_str_COUNTRY" = "TW" ]; then
   sed -i -e "s|UTC|Asia/Taipei|g" /etc/config-software/system.sh
