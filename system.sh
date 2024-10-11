@@ -60,13 +60,13 @@ uci commit network
 uci -q delete dhcp.lan.dhcp_option
 uci -q delete dhcp.lan.dns
 # IPV4
-uci add_list dhcp.lan.dhcp_option="6,1.1.1.1,8.8.8.8"
-uci add_list dhcp.lan.dhcp_option="6,1.0.0.1,8.8.4.4"
+#uci add_list dhcp.lan.dhcp_option="6,1.1.1.1,8.8.8.8"
+#uci add_list dhcp.lan.dhcp_option="6,1.0.0.1,8.8.4.4"
 # IPV6
-uci add_list dhcp.lan.dns="2606:4700:4700::1111"
-uci add_list dhcp.lan.dns="2001:4860:4860::8888"
-uci add_list dhcp.lan.dns="2606:4700:4700::1001"
-uci add_list dhcp.lan.dns="2001:4860:4860::8844"
+#uci add_list dhcp.lan.dns="2606:4700:4700::1111"
+#uci add_list dhcp.lan.dns="2001:4860:4860::8888"
+#uci add_list dhcp.lan.dns="2606:4700:4700::1001"
+#uci add_list dhcp.lan.dns="2001:4860:4860::8844"
 #
 uci set dhcp.@dnsmasq[0].cachesize='2000'
 #
