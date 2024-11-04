@@ -66,8 +66,8 @@ uci set network.@device[0].igmp_snooping='1'
 uci set dropbear.@dropbear[0].Interface=${BRIDGE}
 # バンドステアリング
 BROADCAST_IP="${IPADDR%.*}.255"
-uci set dawn.@network[0].broadcast_ip=$BROADCAST_IP
-uci set dawn.@metric[0].kicking=1
+#uci set dawn.@network[0].broadcast_ip=$BROADCAST_IP
+#uci set dawn.@metric[0].kicking=1
 uci del_list umdns.@umdns[0].network='lan'
 uci add_list umdns.@umdns[0].network=${BRIDGE}
 uci commit
