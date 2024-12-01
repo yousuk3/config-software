@@ -65,17 +65,17 @@ uci set network.@device[0].igmp_snooping='1'
 #
 uci set dropbear.@dropbear[0].Interface=${BRIDGE}
 # バンドステアリング
-BROADCAST_IP="${IPADDR%.*}.255"
-#uci set dawn.@network[0].broadcast_ip=$BROADCAST_IP
-#uci set dawn.@metric[0].kicking=1
-uci set dawn.global.kicking='1'
-uci set dawn.@local[0].loglevel='5'
-uci set dawn.802_11a.ht_support='0'
-uci set dawn.802_11a.vht_support='0'
-uci set dawn.802_11g.ht_support='0'
-uci set dawn.802_11g.vht_support='0'
-uci del_list umdns.@umdns[0].network='lan'
-uci add_list umdns.@umdns[0].network=${BRIDGE}
+#BROADCAST_IP="${IPADDR%.*}.255"
+##uci set dawn.@network[0].broadcast_ip=$BROADCAST_IP
+##uci set dawn.@metric[0].kicking=1
+#uci set dawn.global.kicking='1'
+#uci set dawn.@local[0].loglevel='5'
+#uci set dawn.802_11a.ht_support='0'
+#uci set dawn.802_11a.vht_support='0'
+#uci set dawn.802_11g.ht_support='0'
+#uci set dawn.802_11g.vht_support='0'
+#uci del_list umdns.@umdns[0].network='lan'
+#uci add_list umdns.@umdns[0].network=${BRIDGE}
 uci commit
 
 # DHCPサーバーを無効にする
