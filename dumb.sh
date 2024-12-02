@@ -30,7 +30,7 @@ else
     uci add_list network.@device[0].ports='wan'
 fi
 
-BRIDGE='bridge'
+BRIDGE='lan'
 uci set network.${BRIDGE}=interface
 uci set network.${BRIDGE}.proto='static'
 uci set network.${BRIDGE}.device=${LAN_DEVICE}
@@ -40,13 +40,13 @@ uci set network.${BRIDGE}.gateway=${GATEWAY}
 uci set network.${BRIDGE}.dns=${GATEWAY}
 uci set network.${BRIDGE}.delegate='0'
 # IPV6
-BRIDGE6='bridge6'
+BRIDGE6='lan6'
 uci set network.${BRIDGE6}=interface
 uci set network.${BRIDGE6}.proto='dhcpv6'
 uci set network.${BRIDGE6}.device=@${BRIDGE}
 uci set network.${BRIDGE6}.reqaddress='try'
 uci set network.${BRIDGE6}.reqprefix='no'
-#uci set network.${BRIDGE6}.type='bridge'
+# uci set network.${BRIDGE6}.type='bridge'
 # 既存のワイヤレスネットワークを変更する
 uci set wireless.default_radio0.network=${BRIDGE}
 uci set wireless.default_radio1.network=${BRIDGE}
@@ -55,27 +55,24 @@ uci set system.ntp=timeserver
 uci set system.ntp.enable_server='0'
 uci set system.ntp.use_dhcp='1'
 uci set system.ntp.server=${GATEWAY}
-# TTYD setup
-#uci set ttyd.@ttyd[0].interface=@${BRIDGE6}
-#uci set ttyd.ttyd.interface=@${BRIDGE6}
 # マルチキャスト
 uci set network.globals.packet_steering='1'
-#uci set network.globals.igmp_snooping='1'
+# uci set network.globals.igmp_snooping='1' # igmp_snoopingはglobalsの設定項目にない
 uci set network.@device[0].igmp_snooping='1'
 #
 uci set dropbear.@dropbear[0].Interface=${BRIDGE}
-# バンドステアリング
-#BROADCAST_IP="${IPADDR%.*}.255"
-##uci set dawn.@network[0].broadcast_ip=$BROADCAST_IP
-##uci set dawn.@metric[0].kicking=1
-#uci set dawn.global.kicking='1'
-#uci set dawn.@local[0].loglevel='5'
-#uci set dawn.802_11a.ht_support='0'
-#uci set dawn.802_11a.vht_support='0'
-#uci set dawn.802_11g.ht_support='0'
-#uci set dawn.802_11g.vht_support='0'
-#uci del_list umdns.@umdns[0].network='lan'
-#uci add_list umdns.@umdns[0].network=${BRIDGE}
+# band steering
+# BROADCAST_IP="${IPADDR%.*}.255"
+# # uci set dawn.@network[0].broadcast_ip=$BROADCAST_IP
+# # uci set dawn.@metric[0].kicking=1
+# uci set dawn.global.kicking='1'
+# uci set dawn.@local[0].loglevel='5'
+# uci set dawn.802_11a.ht_support='0'
+# uci set dawn.802_11a.vht_support='0'
+# uci set dawn.802_11g.ht_support='0'
+# uci set dawn.802_11g.vht_support='0'
+# uci del_list umdns.@umdns[0].network='lan'
+# uci add_list umdns.@umdns[0].network=${BRIDGE}
 uci commit
 
 # DHCPサーバーを無効にする
@@ -88,7 +85,7 @@ uci commit
 /etc/init.d/firewall disable
 /etc/init.d/firewall stop
 # wpa_supplicantを無効にする(STA WiFiインターフェースがない場合)
-#rm /usr/sbin/wpa_supplicant
+# rm /usr/sbin/wpa_supplicant
 # {
 # デーモンを永続的に無効にする
 # for i in firewall dnsmasq odhcpd; do
