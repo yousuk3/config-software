@@ -9,8 +9,8 @@ do
   echo -e " \033[1;34mOCNバーチャルコネクト --------------------------------\033[0;39m"
   echo -e " \033[1;34m[e]: OCNバーチャルコネクトのインストールと設定 (マルチセッション対応)\033[0;39m"
   echo -e " \033[1;31m[b]: OCNバーチャルコネクトのリムーブと以前の設定に復元\033[0;39m"
-  echo -e " \033[1;32m[n]: ニチバン対策の設定のみ実行\033[0;39m"
-  echo -e " \033[1;35m[o]: ニチバン対策の設定を以前の設定に復元\033[0;39m"
+  echo -e " \033[1;32m[n]: マルチセッション対応設定のみ実行\033[0;39m"
+  echo -e " \033[1;35m[o]: マルチセッション対応設定を以前の設定に復元\033[0;39m"
   echo -e " \033[1;33m[r]: 戻る\033[0;39m"
   echo -e " \033[1;34m------------------------------------------------------\033[0;39m"
   read -p " 選択してください [e/b/n/o or r]: " num
@@ -622,11 +622,12 @@ reboot
 exit
 }
 
-OPENWRT_RELEAS=`cat /etc/banner | grep OpenWrt | awk '{ print $2 }' | cut -c 1-2`
-if [[ "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "SN" ]]; then
- echo -e " \033[1;37mバージョンチェック: OK\033[0;39m"
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" || "${OPENWRT_RELEAS}" = "19" ]]; then
+   echo -e " The version of this device is \033[1;33m$OPENWRT_RELEAS\033[0;39m"
+   echo -e " Version Check: \033[1;36mOK\033[0;39m"
  else
- read -p " バージョンが違うため終了します"
+   read -p " Exit due to different versions"
  exit
 fi
 
