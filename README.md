@@ -101,7 +101,7 @@
 
 ## New settings All-in-one script Suitable for beginners
 
-### [SSH access](https://openwrt.org/docs/guide-quick-start/sshadministration)
+### [SSH access](https://openwrt.org/docs/guide-quick-start/sshadministration) with [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/what-is-windows-powershell?view=powershell-7.4)
 
 - [Starting PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/windows-powershell/starting-windows-powershell?view=powershell-7.4) (Key entry): `Win`+`x` > `a` > `yes`
   ※Standard on Windows 7 or later
@@ -119,7 +119,7 @@ Clear-Content .ssh\known_hosts -Force
  
 ### ttyd installation and configuration
 
-- ttyd.sh
+- [ttyd.sh](https://github.com/site-u2023/config-software/blob/main/ttyd.sh)
 ```sh:SSH
 mkdir -p /etc/config-software; wget --no-check-certificate -O /etc/config-software/ttyd.sh https://raw.githubusercontent.com/site-u2023/config-software/main/ttyd.sh; sh /etc/config-software/ttyd.sh; confsoft
 ```
@@ -175,6 +175,10 @@ rm -rf /usr/bin/confsoft
 **[openwrt.lan](http://openwrt.lan)** [(192.168.1.1)](http://192.168.1.1)
   - User Name：`root`
   - Password：`Password you set`
+- Run from QR Code: 192.168.1.1
+
+![QR192.168.1.1.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3412833/93eed9ce-7319-9332-99ba-74455b471cdd.png) 
+
 
 ### [TTYD](https://qiita.com/site_u/items/a23d165201081817cb00#ttyd)
 Filer (used like Explorer with WinSCP)
@@ -184,6 +188,11 @@ Filer (used like Explorer with WinSCP)
 
 - Run from LuCi:
 **[openwrt.lan/ttyd](openwrt.lan/cgi-bin/luci/admin/services/ttyd)** [(http://192.168.1.1/ttyd)](http://192.168.1.1/cgi-bin/luci/admin/services/ttyd)
+
+- Run from QR Code: 192.168.1.1:7681
+
+![QR_062248.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3412833/e7929d2e-d9b0-b599-33cf-55413d584b19.png)
+
 
 ### [SFTP](https://qiita.com/site_u/items/a23d165201081817cb00#sftp-server)
 
