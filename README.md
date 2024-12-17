@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-# Openwrt setting custom
-This configuration file is a customized version of site-u2023/config-software.
-For detailed information, please refer to https://github.com/site-u2023/config-software.
-This file is for OpenWrt 23.05.5 (October 4, 2024).
-=======
 # OpenWrt Initial Setup All-in-One Script Suitable for beginners
 
 ### **Urgent**
@@ -104,18 +98,11 @@ This file is for OpenWrt 23.05.5 (October 4, 2024).
 ---
 
 </details>
->>>>>>> main
 
 ## New settings All-in-one script Suitable for beginners
 
 ### [SSH access](https://openwrt.org/docs/guide-quick-start/sshadministration)
 
-<<<<<<< HEAD
-If you cannot SSH
-Reset SSH login information:
-In Windows PowerShell, use Clear-Content .ssh\known_hosts -Force
-In MacOS Terminal, use ssh-keygen -R 192.168.xx.xx
-=======
 - [Starting PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/windows-powershell/starting-windows-powershell?view=powershell-7.4) (Key entry): `Win`+`x` > `a` > `yes`
   ※Standard on Windows 7 or later
 
@@ -129,17 +116,11 @@ Clear-Content .ssh\known_hosts -Force
 ---
 
 </details>
->>>>>>> main
  
 ### ttyd installation and configuration
 
 - ttyd.sh
 ```sh:SSH
-<<<<<<< HEAD
-mkdir -p /etc/config-software; wget --no-check-certificate -O /etc/config-software/ttyd.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/ttyd.sh; sh /etc/config-software/ttyd.sh
-
-```
-=======
 mkdir -p /etc/config-software; wget --no-check-certificate -O /etc/config-software/ttyd.sh https://raw.githubusercontent.com/site-u2023/config-software/main/ttyd.sh; sh /etc/config-software/ttyd.sh; confsoft
 ```
 :warning:Internet connection setup requires device to be connected directly to ONU (Japan Only)
@@ -162,7 +143,6 @@ uci commit network
 ---
 
 </details>
->>>>>>> main
 
 ### Run Script
 
