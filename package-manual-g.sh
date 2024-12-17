@@ -116,27 +116,27 @@ _func_lucii18nbaseja
 
 function _func_lucii18nbaseja {
 LUCI_JA=`opkg list-installed luci-i18n-base-$input_str_Languages | awk '{ print $1 }'`
-LUCI_JA_OPKG=`opkg list-installed luci-i18n-opkg-$input_str_Languages | awk '{ print $1 }'`
+#LUCI_JA_OPKG=`opkg list-installed luci-i18n-opkg-$input_str_Languages | awk '{ print $1 }'`
 LUCI_JA_FIREWALL=`opkg list-installed luci-i18n-firewall-$input_str_Languages | awk '{ print $1 }'`
 if [ -z "$LUCI_JA" ] || [ -z "$LUCI_JA_OPKG" ] || [ -z "$LUCI_JA_FIREWALL" ]; then
 while :
 do
   echo -e " \033[1;33mInstall LuCi language pack\033[0;39m"
   echo -e " \033[1;32mluci-i18n-base-$input_str_Languages: $((`opkg info luci-i18n-base-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
-  echo -e " \033[1;32mluci-i18n-opkg-$input_str_Languages: $((`opkg info luci-i18n-opkg-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
+# echo -e " \033[1;32mluci-i18n-opkg-$input_str_Languages: $((`opkg info luci-i18n-opkg-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
   echo -e " \033[1;32mluci-i18n-firewall-$input_str_Languages: $((`opkg info luci-i18n-firewall-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
   read -p " Please select key [y/n or q]: " num
   case "${num}" in
     "y" ) echo luci-i18n-base-$input_str_Languages >> /etc/config-software/list-installed/Before
-          echo luci-i18n-opkg-$input_str_Languages >> /etc/config-software/list-installed/Before
+#         echo luci-i18n-opkg-$input_str_Languages >> /etc/config-software/list-installed/Before
           echo luci-i18n-firewall-$input_str_Languages >> /etc/config-software/list-installed/Before
           echo $((`opkg info luci-i18n-base-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
-          echo $((`opkg info luci-i18n-opkg-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
+#         echo $((`opkg info luci-i18n-opkg-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
           echo $((`opkg info luci-i18n-firewall-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
           echo -e " \033[1;32mTotal installation size: `awk '{sum += $1} END {print sum}' < /etc/config-software/list-installed/Flash`KB\033[0;39m"
           break ;;
     "n" ) LUCI_JA='1'
-          LUCI_JA_OPKG='1'
+#         LUCI_JA_OPKG='1'
           LUCI_JA_FIREWALL='1'
           break ;;
     "q" ) exit ;;
@@ -462,31 +462,26 @@ function _func_attendedsysupgrade {
 Attended_common=`opkg list-installed attendedsysupgrade-common | awk '{ print $1 }'`
 Attended=`opkg list-installed luci-app-attendedsysupgrade | awk '{ print $1 }'`
 Attended_ja=`opkg list-installed luci-i18n-attendedsysupgrade-$input_str_Languages | awk '{ print $1 }'`
-Auc=`opkg list-installed auc | awk '{ print $1 }'`
-if [ -z "$Attended_common" ] || [ -z "$Attended" ] || [ -z "$Attended_ja" ] || [ -z "$Auc" ]; then
+if [ -z "$Attended_common" ] || [ -z "$Attended" ] || [ -z "$Attended_ja" ]; then
 while :
 do
   echo -e " \033[1;33mInstall Attended Sysupgrade\033[0;39m"
   echo -e " \033[1;32mattendedsysupgrade-common: $((`opkg info attendedsysupgrade-common | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
   echo -e " \033[1;32mluci-app-attendedsysupgrade: $((`opkg info luci-app-attendedsysupgrade | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
   echo -e " \033[1;32mluci-i18n-attendedsysupgrade-$input_str_Languages: $((`opkg info luci-i18n-attendedsysupgrade-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
-  echo -e " \033[1;32mauc: $((`opkg info auc | grep Size | awk '{ print $2 }'`/1024))KB\033[0;39m"
   read -p " Please select key [y/n or q]: " num
   case "${num}" in
     "y" ) echo attendedsysupgrade-common >> /etc/config-software/list-installed/Before
           echo luci-app-attendedsysupgrade >> /etc/config-software/list-installed/Before
-          echo auc >> /etc/config-software/list-installed/Before
           echo $((`opkg info attendedsysupgrade-common | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
           echo $((`opkg info luci-app-attendedsysupgrade | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
           echo luci-i18n-attendedsysupgrade-$input_str_Languages >> /etc/config-software/list-installed/Before
           echo $((`opkg info luci-i18n-attendedsysupgrade-$input_str_Languages | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
-          echo $((`opkg info auc | grep Size | awk '{ print $2 }'`/1024)) >> /etc/config-software/list-installed/Flash
           echo -e " \033[1;32mTotal installation size: `awk '{sum += $1} END {print sum}' < /etc/config-software/list-installed/Flash`KB\033[0;39m"
           break ;;
     "n" ) Attended_common='1'
           Attended='1'
           Attended_ja='1'
-          Auc='1'
           break ;;
     "q" ) exit ;;
   esac
@@ -1012,9 +1007,9 @@ fi
 if [ -z "$LUCI_JA" ]; then
 opkg install luci-i18n-base-$input_str_Languages
 fi
-if [ -z "$LUCI_JA_OPKG" ]; then
-opkg install luci-i18n-opkg-$input_str_Languages
-fi
+#if [ -z "$LUCI_JA_OPKG" ]; then
+#opkg install luci-i18n-opkg-$input_str_Languages
+#fi
 if [ -z "$LUCI_JA_FIREWALL" ]; then
 opkg install luci-i18n-firewall-$input_str_Languages
 fi
@@ -1047,7 +1042,7 @@ if [ -z "$TTYD_JA" ]; then
 opkg install luci-i18n-ttyd-$input_str_Languages
 fi
 
-coreutils
+# coreutils
 if [ -z "$CORE" ]; then
 opkg install coreutils
 fi
@@ -1136,64 +1131,61 @@ fi
 if [ -z "$Attended_ja" ]; then
 opkg install luci-i18n-attendedsysupgrade-$input_str_Languages
 fi
-if [ -z "$Auc" ]; then
-opkg install auc
-fi
 
 # custom feed (log viewer, cpu status, cpu perf, temp status, Internet detector, disk info)
 wget --no-check-certificate -O /etc/config-software/pacage_list https://github.com/gSpotx2f/packages-openwrt/raw/master/current/
-PACAGE_LIST=`cat  /etc/config-software/pacage_list |sed -ne '/ <script type/,/<\/script>/p' |sed -e 's/<[^>]*>//g'`
+PACAGE_LIST=`cat /etc/config-software/pacage_list |sed -ne '/ <script type/,/<\/script>/p' |sed -e 's/<[^>]*>//g'`
 #echo $PACAGE_LIST
 
 # log viewer
 if [ -z "$LOG" ]; then
-LOG_VIEWER=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-log-viewer") ,44)}'`
-#echo $LOG_VIEWER
-wget --no-check-certificate -O /tmp/luci-app-log-viewer_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LOG_VIEWER}
+LOG_VIEWER=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-log-viewer") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
+echo $LOG_VIEWER
+wget --no-check-certificate -O /tmp/luci-app-log-viewer_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LOG_VIEWER}.ipk
 opkg install /tmp/luci-app-log-viewer_all.ipk
 rm /tmp/luci-app-log-viewer_all.ipk
 fi
 
 # cpu status
 if [ -z "$CPU_STATUS" ]; then
-CPU_STATUS_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-cpu-status_0") ,44)}'`
+CPU_STATUS_V=`echo ${PACAGE_LIST} | awk '{ if (gsub(/luci-app-cpu-status-mini/, "HOGEHOGE")) print }' | awk '{print substr($0,index($0,"current/luci-app-cpu-status") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
 #echo $CPU_STATUS_V
-wget --no-check-certificate -O /tmp/luci-app-cpu-status_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${CPU_STATUS_V}
+wget --no-check-certificate -O /tmp/luci-app-cpu-status_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${CPU_STATUS_V}.ipk
 opkg install /tmp/luci-app-cpu-status_all.ipk
 rm /tmp/luci-app-cpu-status_all.ipk
 fi
 
 # cpu perf
 if [ -z "$CPU_PERFORMANCE" ]; then
-CPU_PERF_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-cpu-perf") ,42)}'`
+CPU_PERF_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-cpu-perf") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
 #echo $CPU_PERF_V
-wget --no-check-certificate -O /tmp/luci-app-cpu-perf_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${CPU_PERF_V}
+wget --no-check-certificate -O /tmp/luci-app-cpu-perf_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${CPU_PERF_V}.ipk
 opkg install /tmp/luci-app-cpu-perf_all.ipk
 rm /tmp/luci-app-cpu-perf_all.ipk
 fi
 
 # temp status
 if [ -z "$TMP_STATUS" ]; then
-TEMP_STATUS_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-temp-status") ,45)}'`
+TEMP_STATUS_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-temp-status") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
 #echo $TEMP_STATUS_V
-wget --no-check-certificate -O /tmp/luci-app-temp-status_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${TEMP_STATUS_V}
+wget --no-check-certificate -O /tmp/luci-app-temp-status_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${TEMP_STATUS_V}.ipk
 opkg install /tmp/luci-app-temp-status_all.ipk
 rm /tmp/luci-app-temp-status_all.ipk
 fi
 
 # Internet detector
 if [ -z "$DETECTER" ]; then
-INTERNET_DETECTOR=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/internet-detector_1") ,41)}'`
+INTERNET_DETECTOR=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/internet-detector_") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
 #echo $INTERNET_DETECTOR
-wget --no-check-certificate -O /tmp/internet-detector_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${INTERNET_DETECTOR}
+wget --no-check-certificate -O /tmp/internet-detector_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${INTERNET_DETECTOR}.ipk
 opkg install /tmp/internet-detector_all.ipk
 rm /tmp/internet-detector_all.ipk
 /etc/init.d/internet-detector enable
 fi
 if [ -z "$DETECTER_APP" ]; then
-LUCI_APP_INTERNET_DETECTER_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-internet-detector") ,51)}'`
+LUCI_APP_INTERNET_DETECTER_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-internet-detector") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
 #echo $LUCI_APP_INTERNET_DETECTER_V
-wget --no-check-certificate -O /tmp/luci-app-internet-detector_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LUCI_APP_INTERNET_DETECTER_V}
+wget --no-check-certificate -O /tmp/luci-app-internet-detector_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LUCI_APP_INTERNET_DETECTER_V}.ipk
 opkg install /tmp/luci-app-internet-detector_all.ipk
 rm /tmp/luci-app-internet-detector_all.ipk
 fi
@@ -1214,9 +1206,9 @@ fi
 
 # disks info
 if [ -z "$luci_app_disks_info" ]; then
-LUCI_APP_DISKA_INFO_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-disks-info") ,44)}'`
+LUCI_APP_DISKA_INFO_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-disks-info") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
 #echo $LUCI_APP_DISKA_INFO_V
-wget --no-check-certificate -O /tmp/luci-app-disks-info_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LUCI_APP_DISKA_INFO_V}
+wget --no-check-certificate -O /tmp/luci-app-disks-info_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LUCI_APP_DISKA_INFO_V}.ipk
 opkg install /tmp/luci-app-disks-info_all.ipk
 rm /tmp/luci-app-disks-info_all.ipk
 fi
@@ -1327,14 +1319,6 @@ else
  reboot
 fi
 }
-
-OPENWRT_RELEAS=`cat /etc/banner | grep OpenWrt | awk '{ print $2 }' | cut -c 1-2`
-if [ "${OPENWRT_RELEAS}" = "23" ] || [ "${OPENWRT_RELEAS}" = "22" ] || [ "${OPENWRT_RELEAS}" = "21" ] || [ "${OPENWRT_RELEAS}" = "SN" ]; then
- echo -e " \033[1;37mversion check: OK\033[0;39m"
- else
- read -p " Exit due to different versions"
- exit
-fi
 
  while :
  do

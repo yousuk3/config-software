@@ -1,5 +1,5 @@
 #! /bin/sh
-# OpenWrt >= 21.02:
+# OpenWrt >= SnapShot:
 
 
 function _func_Languages {
@@ -57,12 +57,12 @@ done
 
 function _func_INSTALL {
 if [ -e ${UPDATE} ]; then
-opkg update
+apk update
 UPDATE="1"
 fi
 mkdir -p /etc/config-software/list-installed
 echo 0 > /etc/config-software/list-installed/Flash
-opkg list-installed | awk '{ print $1 }' > /etc/config-software/list-installed/Before
+apk info | awk '{ print $1 }' > /etc/config-software/list-installed/Before
 
 cat << EOF > /etc/config-software/list-installed/Before
 luci
@@ -84,15 +84,8 @@ luci-theme-material
 luci-theme-openwrt-2020
 attendedsysupgrade-common
 luci-app-attendedsysupgrade
-luci-app-log-viewer
-luci-app-cpu-perf
-luci-app-temp-status
-internet-detector
-luci-app-internet-detector
-luci-theme-argon
 luci-i18n-dashboard-$input_str_Languages
 luci-i18n-base-$input_str_Languages
-#luci-i18n-opkg-$input_str_Languages
 luci-i18n-firewall-$input_str_Languages
 luci-i18n-ttyd-$input_str_Languages
 luci-i18n-sqm-$input_str_Languages
@@ -103,24 +96,23 @@ luci-i18n-attendedsysupgrade-$input_str_Languages
 EOF
 
 # LuCi
-opkg install luci
+apk add luci
 # LiCi SSL
-opkg install luci-ssl
+apk add luci-ssl
 # Language
-opkg install luci-i18n-base-$input_str_Languages
-#opkg install luci-i18n-opkg-$input_str_Languages
-opkg install luci-i18n-firewall-$input_str_Languages
+apk add luci-i18n-base-$input_str_Languages
+apk add luci-i18n-firewall-$input_str_Languages
 
 # Dashboard
-opkg install luci-mod-dashboard
-opkg install luci-i18n-dashboard-$input_str_Languages
+apk add luci-mod-dashboard
+apk add luci-i18n-dashboard-$input_str_Languages
 
 # SFTP
-opkg install openssh-sftp-server
+apk add openssh-sftp-server
 
 # TTYD
-opkg install luci-app-ttyd
-opkg install luci-i18n-ttyd-$input_str_Languages
+apk add luci-app-ttyd
+apk add luci-i18n-ttyd-$input_str_Languages
 uci set ttyd.@ttyd[0]=ttyd
 uci set ttyd.@ttyd[0].interface='@lan'
 uci set ttyd.@ttyd[0].command='/bin/login -f root '
@@ -130,13 +122,13 @@ uci set ttyd.@ttyd[0].url_arg='1'
 uci commit ttyd
 
 # BUSYBOX
-opkg install coreutils
+apk add coreutils
 
 # Irqbalance
 CPU_INFO=`fgrep 'processor' /proc/cpuinfo | wc -l`
 if [ "$CPU_INFO" -gt 3 ]
 then
- opkg install irqbalance
+ apk add irqbalance
  uci set irqbalance.irqbalance=irqbalance
  uci set irqbalance.irqbalance.enabled='1'
  uci commit irqbalance
@@ -146,8 +138,8 @@ fi
 # SQM
 DOWNLOAD='0' #initial value
 UPLOAD='0' #initial value
-opkg install luci-app-sqm
-opkg install luci-i18n-sqm-$input_str_Languages
+apk add luci-app-sqm
+apk add luci-i18n-sqm-$input_str_Languages
 . /lib/functions/network.sh
 network_flush_cache
 network_find_wan6 NET_IF6
@@ -161,82 +153,35 @@ uci commit sqm
 /etc/init.d/sqm enable
 
 # statistics
-opkg install luci-app-statistics
-opkg install luci-i18n-statistics-$input_str_Languages
+apk add luci-app-statistics
+apk add luci-i18n-statistics-$input_str_Languages
 /etc/init.d/collectd enable
 
 # nlbwmon
-opkg install luci-app-nlbwmon
-opkg install luci-i18n-nlbwmon-$input_str_Languages
+apk add luci-app-nlbwmon
+apk add luci-i18n-nlbwmon-$input_str_Languages
 
 # wifi schedule
-opkg install wifischedule
-opkg install luci-app-wifischedule
-opkg install luci-i18n-wifischedule-$input_str_Languages
+apk add wifischedule
+apk add luci-app-wifischedule
+apk add luci-i18n-wifischedule-$input_str_Languages
 
 # Additional Themes
 # OpnWrt
-opkg install luci-theme-openwrt
+apk add luci-theme-openwrt
 # material
-opkg install luci-theme-material
+apk add luci-theme-material
 # openwrt-2020
-opkg install luci-theme-openwrt-2020
+apk add luci-theme-openwrt-2020
 
 # Attended Sysupgrade
-opkg install attendedsysupgrade-common
-opkg install luci-app-attendedsysupgrade
-opkg install luci-i18n-attendedsysupgrade-$input_str_Languages
-
-# custom feed (log viewer, cpu status, cpu perf, temp status, Internet detector, disk info)
-wget --no-check-certificate -O /etc/config-software/pacage_list https://github.com/gSpotx2f/packages-openwrt/raw/master/current/
-PACAGE_LIST=`cat /etc/config-software/pacage_list |sed -ne '/ <script type/,/<\/script>/p' |sed -e 's/<[^>]*>//g'`
-#echo $PACAGE_LIST
-
-# log viewer
-LOG_VIEWER=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-log-viewer") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
-#echo $LOG_VIEWER
-wget --no-check-certificate -O /tmp/luci-app-log-viewer_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LOG_VIEWER}.ipk
-opkg install /tmp/luci-app-log-viewer_all.ipk
-rm /tmp/luci-app-log-viewer_all.ipk
-
-# cpu status
-CPU_STATUS_V=`echo ${PACAGE_LIST} | awk '{ if (gsub(/luci-app-cpu-status-mini/, "HOGEHOGE")) print }' | awk '{print substr($0,index($0,"current/luci-app-cpu-status") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
-#echo $CPU_STATUS_V
-wget --no-check-certificate -O /tmp/luci-app-cpu-status_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${CPU_STATUS_V}.ipk
-opkg install /tmp/luci-app-cpu-status_all.ipk
-rm /tmp/luci-app-cpu-status_all.ipk
-
-# cpu perf
-CPU_PERF_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-cpu-perf") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
-#echo $CPU_PERF_V
-wget --no-check-certificate -O /tmp/luci-app-cpu-perf_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${CPU_PERF_V}.ipk
-opkg install /tmp/luci-app-cpu-perf_all.ipk
-rm /tmp/luci-app-cpu-perf_all.ipk
-
-# temp status
-TEMP_STATUS_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-temp-status") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
-#echo $TEMP_STATUS_V
-wget --no-check-certificate -O /tmp/luci-app-temp-status_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${TEMP_STATUS_V}.ipk
-opkg install /tmp/luci-app-temp-status_all.ipk
-rm /tmp/luci-app-temp-status_all.ipk
-
-# Internet detector
-INTERNET_DETECTOR=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/internet-detector_") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
-#echo $INTERNET_DETECTOR
-wget --no-check-certificate -O /tmp/internet-detector_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${INTERNET_DETECTOR}.ipk
-opkg install /tmp/internet-detector_all.ipk
-rm /tmp/internet-detector_all.ipk
-/etc/init.d/internet-detector enable
-LUCI_APP_INTERNET_DETECTER_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-internet-detector") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
-#echo $LUCI_APP_INTERNET_DETECTER_V
-wget --no-check-certificate -O /tmp/luci-app-internet-detector_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LUCI_APP_INTERNET_DETECTER_V}.ipk
-opkg install /tmp/luci-app-internet-detector_all.ipk
-rm /tmp/luci-app-internet-detector_all.ipk
+apk add attendedsysupgrade-common
+apk add luci-app-attendedsysupgrade
+apk add luci-i18n-attendedsysupgrade-$input_str_Languages
 
 # USB
 if [ -n "$str_USB" ]; then
 cat << EOF >> /etc/config-software/list-installed/Before
-luci-app-disks-info
 block-mount
 kmod-usb-storage
 kmod-usb-storage-uas
@@ -263,39 +208,34 @@ hd-idle
 luci-app-hd-idle
 luci-i18n-hd-idle-$input_str_Languages
 EOF
-LUCI_APP_DISKA_INFO_V=`echo ${PACAGE_LIST} | awk '{print substr($0,index($0,"current/luci-app-disks-info") ,60)}' | awk '{ sub(".ipk.*$",""); print $0; }'`
-#echo $LUCI_APP_DISKA_INFO_V
-wget --no-check-certificate -O /tmp/luci-app-disks-info_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/${LUCI_APP_DISKA_INFO_V}.ipk
-opkg install /tmp/luci-app-disks-info_all.ipk
-rm /tmp/luci-app-disks-info_all.ipk
 
-  opkg install block-mount
-  opkg install kmod-usb-storage
-  opkg install kmod-usb-storage-uas
-  opkg install usbutils
-  opkg install gdisk
-  opkg install libblkid1
-  opkg install kmod-usb-ledtrig-usbport
-  opkg install luci-app-ledtrig-usbport
-  opkg install dosfstools
-  opkg install kmod-fs-vfat
-  opkg install e2fsprogs
-  opkg install kmod-fs-ext4
-  opkg install f2fs-tools
-  opkg install kmod-fs-f2fs
-  opkg install exfat-fsck
-  opkg install kmod-fs-exfat
-  opkg install ntfs-3g
-  opkg install kmod-fs-ntfs3
-  opkg install hfsfsck
-  opkg install kmod-fs-hfs
-  opkg install kmod-fs-hfsplus
-  opkg install hdparm
-  opkg install hd-idle
-  opkg install luci-app-hd-idle
-  opkg install luci-i18n-hd-idle-$input_str_Languages
+  apk add block-mount
+  apk add kmod-usb-storage
+  apk add kmod-usb-storage-uas
+  apk add usbutils
+  apk add gdisk
+  apk add libblkid1
+  apk add kmod-usb-ledtrig-usbport
+  apk add luci-app-ledtrig-usbport
+  apk add dosfstools
+  apk add kmod-fs-vfat
+  apk add e2fsprogs
+  apk add kmod-fs-ext4
+  apk add f2fs-tools
+  apk add kmod-fs-f2fs
+  apk add exfat-fsck
+  apk add kmod-fs-exfat
+  apk add ntfs-3g
+  apk add kmod-fs-ntfs3
+  apk add hfsfsck
+  apk add kmod-fs-hfs
+  apk add kmod-fs-hfsplus
+  apk add hdparm
+  apk add hd-idle
+  apk add luci-app-hd-idle
+  apk add luci-i18n-hd-idle-$input_str_Languages
 fi
-opkg list-installed | awk '{ print $1 }' > /etc/config-software/list-installed/After
+apk info | awk '{ print $1 }' > /etc/config-software/list-installed/After
 awk -F, 'FNR==NR{a[$1]++; next} !a[$1]' /etc/config-software/list-installed/After /etc/config-software/list-installed/Before > /etc/config-software/list-installed/Difference
 if [ -s /etc/config-software/list-installed/Difference ]; then
  while :
@@ -316,6 +256,15 @@ else
 fi
 }
 
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "SN" ]]; then
+   echo -e " The version of this device is \033[1;33m$OPENWRT_RELEAS\033[0;39m"
+   echo -e " Version Check: \033[1;36mOK\033[0;39m"
+ else
+   read -p " Exit due to different versions"
+ exit
+fi
+
  while :
  do
   AVAILABLE_FLASH=`df | fgrep 'overlayfs:/overlay' | awk '{ print $4 }'`
@@ -334,16 +283,9 @@ fi
   echo -e " \033[1;37m・nlbwmon\033[0;39m"
   echo -e " \033[1;37m・wifi schedule\033[0;39m"
   echo -e " \033[1;37m・Themes (openWrt, material, openWrt2020)\033[0;39m"
-  echo -e " \033[1;37m・log viewer (custom feed)\033[0;39m"
-  echo -e " \033[1;37m・cpu status (custom feed)\033[0;39m"
-  echo -e " \033[1;37m・cpu perf (custom feed)\033[0;39m"
-  echo -e " \033[1;37m・temp status (custom feed)\033[0;39m"
-  echo -e " \033[1;37m・internet detector (custom feed)\033[0;39m"
-  echo -e " \033[1;37m・Theme ARGON (custom feed)\033[0;39m"
   echo -e " \033[1;37m・Attended Sysupgrade\033[0;39m"
 str_USB=`dmesg | ls /sys/bus/usb/devices | grep -s usb`
 if [ -n "$str_USB" ]; then
-  echo -e " \033[1;37m・Disk Info (custom feed)\033[0;39m"
   echo -e " \033[1;37m・USB：Base packages \033[0;39m"
   echo -e " \033[1;37m・USB：LED\033[0;39m"
   echo -e " \033[1;37m・USB：FAT32 \033[0;39m"

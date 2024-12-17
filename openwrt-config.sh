@@ -1,6 +1,6 @@
 #! /bin/sh
 # License: CC0
-# OpenWrt >= 21.02:
+# OpenWrt >= 19.07:
 
 function _func_INTERNET {
 while :
@@ -131,7 +131,7 @@ done
 sleep 1
 
 OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
-if [[ "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" || "${OPENWRT_RELEAS}" = "19" ]]; then
+if [[ "${OPENWRT_RELEAS}" = "SN" || "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" || "${OPENWRT_RELEAS}" = "19" ]]; then
    echo -e " The version of this device is \033[1;33m$OPENWRT_RELEAS\033[0;39m"
    echo -e " Version Check: \033[1;36mOK\033[0;39m"
  else
@@ -143,9 +143,9 @@ fi
   AVAILABLE_FLASH=`df | fgrep 'overlayfs:/overlay' | awk '{ print $4 }'`
   echo -e " \033[1;37m-----------------------------------------------------\033[0;39m"
   echo -e " \033[1;37mOpenWrt-Config\033[0;39m"
-  echo -e " \033[1;37mLast update: April 12, 2024 at 11:57 AM.(JST)\033[0;39m"
-  echo -e " \033[1;37mAvailable Memory Space: ${AVAILABLE_MEMORY}KB\033[0;39m"
-  echo -e " \033[1;37mAvailable Flash Space: ${AVAILABLE_FLASH}KB\033[0;39m"
+  echo -e " \033[1;37mLast update: Dec  9 21:14:58 JST 2024\033[0;39m"
+  echo -e " \033[1;37mAvailable Memory Space: $((AVAILABLE_MEMORY/1024)) MB\033[0;39m"
+  echo -e " \033[1;37mAvailable Flash Space: $((AVAILABLE_FLASH/1024)) MB\033[0;39m"
   str_USB=`dmesg | ls /sys/bus/usb/devices | grep -s usb`
   if [ -n "$str_USB" ]; then
     echo -e " \033[1;37mUSB device: Have\033[0;39m"
@@ -169,7 +169,7 @@ do
   echo -e " \033[1;32m[p]: Install recommended packages (automatic or selective)\033[0;39m"
   echo -e " \033[1;35m[b]: Install ad blocker and DNS encryption\033[0;39m"
   echo -e " \033[1;31m[a]: Access point connection setup (Dumb/Bridge)\033[0;39m"
-  echo -e " \033[1;36m[h]: Install Home Assistant\033[0;39m"
+  echo -e " \033[1;36m[h]: Install Home Assistant (Only v23.05)\033[0;39m"
   echo -e " \033[1;37m[e]: Other: BUTTON, IPERF3, SAMBA4, LBS, DFS Check, Guest Wi-Fi\033[0;39m"
   echo -e " \033[7;40m[q]: Quit (Delete this script or not)\033[0;39m"
   echo -e " \033[1;37m-----------------------------------------------------\033[0;39m"

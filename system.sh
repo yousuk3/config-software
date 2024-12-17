@@ -235,11 +235,17 @@ uci set wireless.default_${RADIO_CC}.disassoc_low_ack='0' # maintain low ack
 # uci set wireless.default_${RADIO_CC}.bss_transition='1'
 # set
 uci delete wireless.${RADIO_A}.disabled
+uci delete wireless.default_${RADIO_A}.disabled
 uci delete wireless.${RADIO_AA}.disabled
+uci delete wireless.default_${RADIO_AA}.disabled
 uci delete wireless.${RADIO_B}.disabled
+uci delete wireless.default_${RADIO_B}.disabled
 uci delete wireless.${RADIO_BB}.disabled
+uci delete wireless.default_${RADIO_BB}.disabled
 uci delete wireless.${RADIO_C}.disabled
+uci delete wireless.default_${RADIO_C}.disabled
 uci delete wireless.${RADIO_CC}.disabled
+uci delete wireless.default_${RADIO_CC}.disabled
 uci commit wireless
 # /etc/init.d/network restart
 

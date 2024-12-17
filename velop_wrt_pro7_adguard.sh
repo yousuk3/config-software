@@ -1,15 +1,16 @@
 #! /bin/sh
-
-cp /etc/config/network /etc/config/network.adguard.bak
-cp /etc/config/dhcp /etc/config/dhcp.adguard.bak
-cp /etc/config/firewall /etc/config/firewall.adguard.bak
-
+#　Check version
+mkdir -p /tmp/config-software
+wget --no-check-certificate -O /tmp/config-software/AdGuardHome_list https://github.com/AdguardTeam/AdGuardHome
+AdGuardHome_list=`cat /tmp/config-software/AdGuardHome_list`
+latest_ver=`echo $AdGuardHome_list | awk '{print substr($0,index($0,"AdGuard Home v") ,30)}' | awk '{ sub("</span>.*$",""); print $0; }' | grep -o -E "(v[0-9]+\.){1}[0-9]+(\.[0-9]+)?" | head -n1`
+# Install
 mkdir /etc/AdGuardHome
-cd /etc/AdGuardHome/
-wget https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm.tar.gz -O AdGuardHome-bin.tar.gz
-tar -xzvf AdGuardHome-bin.tar.gz
-cd AdGuardHome/
-./AdGuardHome -s install
+wget --no-check-certificate -O /etc/AdGuardHome/AdGuardHome_linux_armv7.tar.gz https://github.com/AdguardTeam/AdGuardHome/releases/download/${latest_ver}/AdGuardHome_linux_armv7.tar.gz
+tar -xzvf /etc/AdGuardHome/AdGuardHome_linux_armv7.tar.gz -C /etc/
+rm -rf /etc/AdGuardHome/AdGuardHome_linux_armv7.tar.gz
+/etc/init.d/AdGuardHome stop
+/etc/AdGuardHome/AdGuardHome -s install
 /etc/init.d/AdGuardHome enable
 /etc/init.d/AdGuardHome start
 NET_ADDR=$(/sbin/ip -o -4 addr list br-lan | awk 'NR==1{ split($4, ip_addr, "/"); print ip_addr[1] }')

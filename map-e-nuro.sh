@@ -31,19 +31,20 @@ NURO_V6=`echo $NET_PFX6 |cut -b -11`
 
 
 function _func_NURO {
-INSTALL_MAP=`opkg list-installed map`
-if [ ${INSTALL_MAP:0:3} = map ]; then
-    echo "map is installed"
-else
-    opkg update && opkg install map
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" || "${OPENWRT_RELEAS}" = "19" ]]; then
+  opkg update && opkg install map
+  echo -e " \033[1;34mnuro map-e\033[0;39m"
+elif [[ "${OPENWRT_RELEAS}" = "SN" ]]; then
+  apk update
+  apk add map
 fi
-    echo -e " \033[1;34mnuro map-e\033[0;39m"
+
 # network backup
 cp /etc/config/network /etc/config/network.map-e-nuro.old
 cp /etc/config/network /etc/config/dhcp.map-e-nuro.old
 cp /etc/config/firewall /etc/config/firewall.map-e-nuro.old
 # DHCP LAN
-uci set dhcp.lan=dhcp
 uci set dhcp.lan.ra='relay'
 uci set dhcp.lan.dhcpv6='server'
 uci set dhcp.lan.ndp='relay'
@@ -52,7 +53,7 @@ uci set dhcp.lan.force='1'
 uci set network.wan.auto='1'
 # DHCP WAN6
 uci set dhcp.wan6=dhcp
-uci set dhcp.wan6.interface='wan6'
+#uci set dhcp.wan6.ignore='1'
 uci set dhcp.wan6.master='1'
 uci set dhcp.wan6.ra='relay'
 uci set dhcp.wan6.dhcpv6='relay'
@@ -70,10 +71,20 @@ uci set network.${WANMAP}.ip6prefixlen='36'
 uci set network.${WANMAP}.ealen='20'
 uci set network.${WANMAP}.psidlen='8'
 uci set network.${WANMAP}.offset='4'
-uci set network.${WANMAP}.legacymap='1'
-uci set network.${WANMAP}.mtu='1460'
+#uci set network.${WANMAP}.legacymap='1'
+uci set network.${WANMAP}.mtu='1452'
 uci set network.${WANMAP}.encaplimit='ignore'
-uci set network.${WANMAP}.tunlink='wan6'
+#uci set network.${WANMAP}.tunlink='wan6'
+# Version-specific settings
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "SN" || "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" ]]; then
+  #uci set dhcp.wan6.interface='wan6'
+  uci set dhcp.wan6.ignore='1'
+  uci set network.${WANMAP}.legacymap='1'
+  uci set network.${WANMAP}.tunlink='wan6'
+elif [[ "${OPENWRT_RELEAS}" = "19" ]]; then
+  uci add_list network.${WANMAP}.tunlink='wan6'
+fi
 # FW
 ZOON_NO='1'
 uci del_list firewall.@zone[${ZOON_NO}].network='wan'
@@ -126,10 +137,20 @@ return 0
 
 function _func_NICHIBAN {
 cp /lib/netifd/proto/map.sh /lib/netifd/proto/map.sh.old
-wget --no-check-certificate -O /lib/netifd/proto/map.sh https://raw.githubusercontent.com/site-u2023/map-e/main/map.sh.new
-read -p " 何かキーを押してデバイスを再起動してください"
-reboot
-return 0
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "SN" || "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" ]]; then
+  wget --no-check-certificate -O /lib/netifd/proto/map.sh https://raw.githubusercontent.com/site-u2023/map-e/main/map.sh.new
+  read -p " 何かキーを押してデバイスを再起動してください"
+  reboot
+  return 0
+elif [[ "${OPENWRT_RELEAS}" = "19" ]]; then
+  wget --no-check-certificate -O /lib/netifd/proto/map.sh https://raw.githubusercontent.com/site-u2023/map-e/main/map19.sh.new
+  read -p " 何かキーを押してデバイスを再起動してください"
+  reboot
+  return 0
+fi
+
+
 }
 
 function _func_NICHIBAN_PORT {

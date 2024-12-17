@@ -8,8 +8,8 @@ function _func_AdGuard {
 if [ "adguardhome" = "`opkg list-installed adguardhome | awk '{ print $1 }'`" ]; then
   echo -e " \033[1;37mAdGuard already installed\033[0;39m"
 fi
-DISTRIB_ARCH=`cat /etc/openwrt_release | grep DISTRIB_ARCH | awk '{print substr($0,index($0,"=") )}'`
-if  [ "${DISTRIB_ARCH}" = "='aarch64_cortex-a53'" ] || [ "${DISTRIB_ARCH}" = "='arm_cortex-a7_neon-vfpv4'" ] || [ "${DISTRIB_ARCH}" = "='x86_64'" ]; then
+DISTRIB_ARCH=$(grep 'DISTRIB_ARCH' /etc/openwrt_release | cut -d"'" -f2)
+if  [ "${DISTRIB_ARCH}" = "aarch64_cortex-a53" ] || [ "${DISTRIB_ARCH}" = "arm_cortex-a7_neon-vfpv4" ] || [ "${DISTRIB_ARCH}" = "x86_64" ]; then
   echo -e " \033[1;37mSupported Architectures\033[0;39m"
 while :
 do
@@ -288,11 +288,12 @@ if [ "stubby" = "`opkg list-installed stubby | awk '{ print $1 }'`" ]; then
  read -p " DNS over TLS (DoT) already installed"
  exit
 fi
-OPENWRT_RELEAS=`cat /etc/banner | grep OpenWrt | awk '{ print $2 }' | cut -c 1-2`
-if [ "${OPENWRT_RELEAS}" = "23" ] || [ "${OPENWRT_RELEAS}" = "22" ] || [ "${OPENWRT_RELEAS}" = "21" ] || [ "${OPENWRT_RELEAS}" = "SN" ]; then
- echo -e " \033[1;37mversion check: OK\033[0;39m"
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" ]]; then
+   echo -e " The version of this device is \033[1;33m$OPENWRT_RELEAS\033[0;39m"
+   echo -e " Version Check: \033[1;36mOK\033[0;39m"
  else
- read -p " Different version"
+   read -p " Exit due to different versions"
  exit
 fi
 if [ -e ${UPDATE} ]; then

@@ -847,85 +847,73 @@ IPV4=${octet[0]}.${octet[1]}.${octet[2]}.${octet[3]}
 PSID=$psid
 BR=$peeraddr
 
-WAN6_DEVICE=`uci get network.wan6.device`
-
 # network backup
 cp /etc/config/network /etc/config/network.map-e.old
 cp /etc/config/network /etc/config/dhcp.map-e.old
 cp /etc/config/firewall /etc/config/firewall.map-e.old
 
-# DHCP LAN
-uci set dhcp.lan=dhcp
-uci set dhcp.lan.ra='relay'
-uci set dhcp.lan.dhcpv6='server'
-uci set dhcp.lan.ndp='relay'
-uci set dhcp.lan.force='1'
-
 # WAN
 uci set network.wan.auto='0'
 
-# DHCP WAN6
+# DHCP LAN
+uci set dhcp.lan.ra='relay'
+uci set dhcp.lan.dhcpv6='relay'
+uci set dhcp.lan.ndp='relay'
+uci set dhcp.lan.force='1'
+
+# DHCP WAN6        
 uci set dhcp.wan6=dhcp
-uci set dhcp.wan6.interface='wan6'
-uci set dhcp.wan6.ignore='1'
 uci set dhcp.wan6.master='1'
 uci set dhcp.wan6.ra='relay'
 uci set dhcp.wan6.dhcpv6='relay'
 uci set dhcp.wan6.ndp='relay'
 
 # WAN6
-uci set network.wan6=interface
-uci set network.wan6.device=${WAN6_DEVICE}
-uci set network.wan6.proto='dhcpv6' # Onry_V6plus
-uci set network.wan6.reqaddress='try' # Onry_V6plus
-uci set network.wan6.reqprefix='auto' # Onry_V6plus
-uci set network.wan6.ip6prefix=${CE}::/56 # Onry_V6plus
+uci set network.wan6.proto='dhcpv6'
+uci set network.wan6.reqaddress='try'
+uci set network.wan6.reqprefix='auto'
+uci set network.wan6.ip6prefix=${CE}::/64
 
-# WAN6RA # Onry_OCN
-WAN6RA='wan6ra' # Onry_OCN
-uci set network.${WAN6RA}=interface # Onry_OCN
-uci set network.${WAN6RA}.device=${WAN6_DEVICE} # Onry_OCN
-uci set network.${WAN6RA}.proto='static' # Onry_OCN
-uci set network.${WAN6RA}.ip6gw=${CE}::1 # Onry_OCN
-uci set network.${WAN6RA}.ip6prefix=${CE}::/56 # Onry_OCN
-uci add_list network.${WAN6RA}.ip6addr=${CE}::1001 # Onry_OCN
-
-# WANMAP
-WANMAP='wanmap'
-uci set network.${WANMAP}=interface
-uci set network.${WANMAP}.proto='map'
-uci set network.${WANMAP}.maptype='map-e'
-uci set network.${WANMAP}.peeraddr=${peeraddr}
-uci set network.${WANMAP}.ipaddr=${ip4a}
-uci set network.${WANMAP}.ip4prefixlen=${ip4prefixlen}
-uci set network.${WANMAP}.ip6prefix=${ip6pfx}::
-uci set network.${WANMAP}.ip6prefixlen=${ip6prefixlen}
-uci set network.${WANMAP}.ealen=${ealen}
-uci set network.${WANMAP}.psidlen=${psidlen}
-uci set network.${WANMAP}.offset=${offset}
-uci set network.${WANMAP}.legacymap='1'
-uci set network.${WANMAP}.mtu='1460'
-uci set network.${WANMAP}.tunlink='wan6' # Onry_V6plus
-uci set network.${WANMAP}.encaplimit='ignore' # Onry_V6plus
+# WANMAPE
+WANMAPE='wanmape'
+uci set network.${WANMAPE}=interface
+uci set network.${WANMAPE}.proto='map'
+uci set network.${WANMAPE}.maptype='map-e'
+uci set network.${WANMAPE}.peeraddr=${peeraddr}
+uci set network.${WANMAPE}.ipaddr=${ip4a}
+uci set network.${WANMAPE}.ip4prefixlen=${ip4prefixlen}
+uci set network.${WANMAPE}.ip6prefix=${ip6pfx}::
+uci set network.${WANMAPE}.ip6prefixlen=${ip6prefixlen}
+uci set network.${WANMAPE}.ealen=${ealen}
+uci set network.${WANMAPE}.psidlen=${psidlen}
+uci set network.${WANMAPE}.offset=${offset}
+uci set network.${WANMAPE}.mtu='1460'
+uci set network.${WANMAPE}.encaplimit='ignore'
 
 # FW
 ZOON_NO='1'
 uci del_list firewall.@zone[${ZOON_NO}].network='wan'
-uci add_list firewall.@zone[${ZOON_NO}].network=${WANMAP}
-uci add_list firewall.@zone[${ZOON_NO}].network=${WAN6RA} # Onry_OCN
+uci add_list firewall.@zone[${ZOON_NO}].network=${WANMAPE}
+
+# Version-specific settings
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "SN" || "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" ]]; then
+  uci set dhcp.wan6.interface='wan6'
+  uci set dhcp.wan6.ignore='1'
+  uci set network.${WANMAPE}.legacymap='1'
+  uci set network.${WANMAPE}.tunlink='wan6'
+elif [[ "${OPENWRT_RELEAS}" = "19" ]]; then
+  uci add_list network.${WANMAPE}.tunlink='wan6'
+fi
 
 uci commit
 
 echo -e "\033[1;33m wan ipaddr6: ${NET_ADDR6}\033[0;33m"
-echo -e "\033[1;32m wan6 ip6prefix: \033[0;39m"${CE}::/56 # Onry_V6plus
-echo -e "\033[1;32m ${WAN6RA} device: \033[0;39m${WAN6_DEVICE} # Onry_OCN
-echo -e "\033[1;32m ${WAN6RA} ip6gw: \033[0;39m"${CE}::1 # Onry_OCNN
-echo -e "\033[1;32m ${WAN6RA} ip6prefix: \033[0;39m"${CE}::/56 # Onry_OCN
-echo -e "\033[1;32m ${WAN6RA} ip6addr: \033[0;39m"${CE}::1001 # Onry_OCN
-echo -e "\033[1;32m ${WANMAP} peeraddr: \033[0;39m"${peeraddr}
-echo -e "\033[1;32m ${WANMAP} ip4prefixlen: \033[0;39m"${ip4prefixlen}
-echo -e "\033[1;32m ${WANMAP} ip6pfx: \033[0;39m"${ip6pfx}::
-echo -e "\033[1;32m ${WANMAP} ip6prefixlen: \033[0;39m"${ip6prefixlen}
-echo -e "\033[1;32m ${WANMAP} ealen: \033[0;39m"${ealen}
-echo -e "\033[1;32m ${WANMAP} psidlen: \033[0;39m"${psidlen}
-echo -e "\033[1;32m ${WANMAP} offset: \033[0;39m"${offset}
+echo -e "\033[1;32m wan6 ip6prefix: \033[0;39m"${CE}::/64
+echo -e "\033[1;32m ${WANMAPE} peeraddr: \033[0;39m"${peeraddr}
+echo -e "\033[1;32m ${WANMAPE} ip4prefixlen: \033[0;39m"${ip4prefixlen}
+echo -e "\033[1;32m ${WANMAPE} ip6pfx: \033[0;39m"${ip6pfx}::
+echo -e "\033[1;32m ${WANMAPE} ip6prefixlen: \033[0;39m"${ip6prefixlen}
+echo -e "\033[1;32m ${WANMAPE} ealen: \033[0;39m"${ealen}
+echo -e "\033[1;32m ${WANMAPE} psidlen: \033[0;39m"${psidlen}
+echo -e "\033[1;32m ${WANMAPE} offset: \033[0;39m"${offset}

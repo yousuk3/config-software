@@ -1,15 +1,18 @@
 #! /bin/sh
 
-
 cp /etc/config/network /etc/config/network.adguard.bak
 cp /etc/config/dhcp /etc/config/dhcp.adguard.bak
 cp /etc/config/firewall /etc/config/firewall.adguard.bak
 
-UPDATE="/tmp/opkg-lists/openwrt_telephony"
-if [ ! -e ${UPDATE} ]; then
-opkg update
+OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+if [[ "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" ]]; then
+  opkg update
+  opkg install adguardhome
+elif [[ "${OPENWRT_RELEAS}" = "SN" ]]; then
+  apk update
+  apk add adguardhome
 fi
-opkg install adguardhome
+
 service adguardhome enable
 service adguardhome start
 NET_ADDR=$(/sbin/ip -o -4 addr list br-lan | awk 'NR==1{ split($4, ip_addr, "/"); print ip_addr[1] }')
@@ -46,3 +49,4 @@ uci set firewall.adguardhome_dns_53.dest_port='53'
 uci set firewall.adguardhome_dns_53.family="any"
 uci commit firewall
 /etc/init.d/firewall restart
+exit

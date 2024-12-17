@@ -305,27 +305,27 @@ do
   echo -e " \033[1;33mDevice Password: ${input_str_ROOT_PASSWD}\033[0;39m"
   echo -e " \033[1;35mWi-Fi Country Code: ${input_str_COUNTRY}\033[0;39m"
   if [ ! -z ${WIFI_NO_A} ]; then
-  echo -e " \033[1;32mWi-Fi ${RADIO_A} ${WIFI_NO_A} SSID: ${input_str_WIFI_PASSWD_A}\033[0;39m"
+  echo -e " \033[1;32mWi-Fi ${RADIO_A} ${WIFI_NO_A} SSID: ${input_str_WIFI_SSID_A}\033[0;39m"
   echo -e " \033[1;36mWi-Fi ${RADIO_A} ${WIFI_NO_A} Password: ${input_str_WIFI_PASSWD_A}\033[0;39m"
   fi
   if [ ! -z ${WIFI_NO_AA} ]; then
-  echo -e " \033[1;32mWi-Fi ${RADIO_AA} ${WIFI_NO_AA} SSID: ${input_str_WIFI_PASSWD_AA}\033[0;39m"
+  echo -e " \033[1;32mWi-Fi ${RADIO_AA} ${WIFI_NO_AA} SSID: ${input_str_WIFI_SSID_AA}\033[0;39m"
   echo -e " \033[1;36mWi-Fi ${RADIO_AA} ${WIFI_NO_AA} Password: ${input_str_WIFI_PASSWD_AA}\033[0;39m"
   fi
   if [ ! -z ${WIFI_NO_B} ]; then
-  echo -e " \033[1;32mWi-Fi ${RADIO_B} ${WIFI_NO_B} SSID: ${input_str_WIFI_PASSWD_B}\033[0;39m"
+  echo -e " \033[1;32mWi-Fi ${RADIO_B} ${WIFI_NO_B} SSID: ${input_str_WIFI_SSID_B}\033[0;39m"
   echo -e " \033[1;36mWi-Fi ${RADIO_B} ${WIFI_NO_B} Password: ${input_str_WIFI_PASSWD_B}\033[0;39m"
   fi
   if [ ! -z ${WIFI_NO_BB} ]; then
-  echo -e " \033[1;32mWi-Fi ${RADIO_BB} ${WIFI_NO_BB} SSID: ${input_str_WIFI_PASSWD_BB}\033[0;39m"
+  echo -e " \033[1;32mWi-Fi ${RADIO_BB} ${WIFI_NO_BB} SSID: ${input_str_WIFI_SSID_BB}\033[0;39m"
   echo -e " \033[1;36mWi-Fi ${RADIO_BB} ${WIFI_NO_BB} Password: ${input_str_WIFI_PASSWD_BB}\033[0;39m"
   fi
   if [ ! -z ${WIFI_NO_C} ]; then
-  echo -e " \033[1;32mWi-Fi ${RADIO_C} ${WIFI_NO_C} SSID: ${input_str_WIFI_PASSWD_C}\033[0;39m"
+  echo -e " \033[1;32mWi-Fi ${RADIO_C} ${WIFI_NO_C} SSID: ${input_str_WIFI_SSID_C}\033[0;39m"
   echo -e " \033[1;36mWi-Fi ${RADIO_C} ${WIFI_NO_C} Password: ${input_str_WIFI_PASSWD_C}\033[0;39m"
   fi
   if [ ! -z ${WIFI_NO_CC} ]; then
-  echo -e " \033[1;32mWi-Fi ${RADIO_CC} ${WIFI_NO_CC} SSID: ${input_str_WIFI_PASSWD_CC}\033[0;39m"
+  echo -e " \033[1;32mWi-Fi ${RADIO_CC} ${WIFI_NO_CC} SSID: ${input_str_WIFI_SSID_CC}\033[0;39m"
   echo -e " \033[1;36mWi-Fi ${RADIO_CC} ${WIFI_NO_CC} Password: ${input_str_WIFI_PASSWD_CC}\033[0;39m"
   fi
   if [ -n "$GUEST" ]; then
@@ -350,74 +350,59 @@ done
 function _func_DEVICE_SET {
   wget --no-check-certificate -O /etc/config-software/system.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/system.sh
   if [ "$input_str_COUNTRY" = "JP" ]; then
-  sed -i -e "s|UTC|Asia/Tokyo|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "CN" ]; then
-  sed -i -e "s|UTC|Asia/Shanghai|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|CST-8|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "HK" ]; then
-  sed -i -e "s|UTC|Asia/Hong Kong|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|HKT-8|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "US" ]; then
-  echo -e " \033[1;37mYou probably live in Japan\033[0;39m"
-  echo -e " \033[1;37mPlease change to your local time zone\033[0;39m"
-  sed -i -e "s|UTC|Asia/Tokyo|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "TW" ]; then
-  sed -i -e "s|UTC|Asia/Taipei|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|CST-8|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "KR" ]; then
-  sed -i -e "s|UTC|Asia/Seoul|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|KST-9|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "RU" ]; then
-  sed -i -e "s|UTC|Europe/Moscow|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|MSK-3|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "ID" ]; then
-  sed -i -e "s|UTC|Asia/Jakarta|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|WIB-7|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "VN" ]; then
-  sed -i -e "s|UTC|Asia/Jakarta|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|WIB-7|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "DE" ]; then
-  sed -i -e "s|UTC|Europe/Berlin|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|CET-1CEST,M3.5.0,M10.5.0/3|g" /etc/config-software/system.sh
-  fi
-  if [ "$input_str_COUNTRY" = "FR" ]; then
-  sed -i -e "s|UTC|Europe/Paris|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|CET-1CEST,M3.5.0,M10.5.0/3|g" /etc/config-software/system.sh
-  fi 
-  if [ "$input_str_COUNTRY" = "AU" ]; then
-  sed -i -e "s|UTC|Australia/Melbourne|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|AEST-10AEDT,M10.1.0,M4.1.0/3|g" /etc/config-software/system.sh
-  fi 
-  if [ "$input_str_COUNTRY" = "CA" ]; then
-  echo -e " \033[1;37mIs Alaska ok?\033[0;39m"
-  echo -e " \033[1;37mPlease change to your local time zone\033[0;39m"
-  sed -i -e "s|UTC|America/Anchorage|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|AKST9AKDT,M3.2.0,M11.1.0|g" /etc/config-software/system.sh
-  fi 
-  if [ "$input_str_COUNTRY" = "IN" ]; then
-  sed -i -e "s|UTC|Asia/Kolkata|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|IST-5:30|g" /etc/config-software/system.sh
-  fi 
-  if [ "$input_str_COUNTRY" = "TR" ]; then
-  sed -i -e "s|UTC|Europe/Istanbul|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|<+03>-3|g" /etc/config-software/system.sh
-  fi 
-  if [ "$input_str_COUNTRY" = "SG" ]; then
-  sed -i -e "s|UTC|Asia/Singapore|g" /etc/config-software/system.sh
-  sed -i -e "s|JST-9|<+08>-8|g" /etc/config-software/system.sh
-  fi 
-  if [ -z "$input_str_COUNTRY" ]; then
-  echo -e " \033[5;43mPlease change time zone manually\033[0;39m"
-  sed -i -e "s|JST-9||g" /etc/config-software/system.sh
+    sed -i -e "s|UTC|Asia/Tokyo|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "CN" ]; then
+    sed -i -e "s|UTC|Asia/Shanghai|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|CST-8|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "HK" ]; then
+    sed -i -e "s|UTC|Asia/Hong Kong|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|HKT-8|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "US" ]; then
+    echo -e " \033[1;37mYou probably live in Hawaii\033[0;39m"
+    echo -e " \033[1;37mPlease change to your local time zone\033[0;39m"
+    sed -i -e "s|UTC|Pacific/Honolulu|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|HST10|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "TW" ]; then
+    sed -i -e "s|UTC|Asia/Taipei|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|CST-8|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "KR" ]; then
+    sed -i -e "s|UTC|Asia/Seoul|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|KST-9|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "RU" ]; then
+    sed -i -e "s|UTC|Europe/Moscow|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|MSK-3|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "ID" ]; then
+    sed -i -e "s|UTC|Asia/Jakarta|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|WIB-7|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "VN" ]; then
+    sed -i -e "s|UTC|Asia/Jakarta|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|WIB-7|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "DE" ]; then
+    sed -i -e "s|UTC|Europe/Berlin|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|CET-1CEST,M3.5.0,M10.5.0/3|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "FR" ]; then
+    sed -i -e "s|UTC|Europe/Paris|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|CET-1CEST,M3.5.0,M10.5.0/3|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "AU" ]; then
+    sed -i -e "s|UTC|Australia/Melbourne|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|AEST-10AEDT,M10.1.0,M4.1.0/3|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "CA" ]; then
+    echo -e " \033[1;37mIs Alaska ok?\033[0;39m"
+    echo -e " \033[1;37mPlease change to your local time zone\033[0;39m"
+    sed -i -e "s|UTC|America/Anchorage|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|AKST9AKDT,M3.2.0,M11.1.0|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "IN" ]; then
+    sed -i -e "s|UTC|Asia/Kolkata|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|IST-5:30|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "TR" ]; then
+    sed -i -e "s|UTC|Europe/Istanbul|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|<+03>-3|g" /etc/config-software/system.sh
+  elif [ "$input_str_COUNTRY" = "SG" ]; then
+    sed -i -e "s|UTC|Asia/Singapore|g" /etc/config-software/system.sh
+    sed -i -e "s|JST-9|<+08>-8|g" /etc/config-software/system.sh
+  elif [ -z "$input_str_COUNTRY" ]; then
+    echo -e " \033[5;43mPlease change time zone manually\033[0;39m"
+    sed -i -e "s|JST-9||g" /etc/config-software/system.sh
   fi
   sed -i -e "s/HOSTNAME='openwrt'/HOSTNAME=${input_str_SYSTEM_HOSTNAME}/g" /etc/config-software/system.sh
   sed -i -e "s/ROOT_PASSWD/${input_str_ROOT_PASSWD}/g" /etc/config-software/system.sh
@@ -453,13 +438,16 @@ function _func_DEVICE_SET {
   service zzdfs enable
   fi
   if [ "$GUEST" = "on" ]; then
-  opkg update
-  opkg install bash
-  opkg install qrencode
-  opkg install at
-  wget --no-check-certificate -O /etc/config-software/guest.sh https://raw.githubusercontent.com/yousuk3/config-software/custom1/guest.sh
-  bash /etc/config-software/guest.sh 2> /dev/null
-  service guest_wifi enable
+  OPENWRT_RELEAS=$(grep 'DISTRIB_RELEASE' /etc/openwrt_release | cut -d"'" -f2 | cut -c 1-2)
+    if [[ "${OPENWRT_RELEAS}" = "24" || "${OPENWRT_RELEAS}" = "23" || "${OPENWRT_RELEAS}" = "22" || "${OPENWRT_RELEAS}" = "21" || "${OPENWRT_RELEAS}" = "19" ]]; then
+      opkg update
+      opkg install bash
+      opkg install qrencode
+      opkg install at
+      wget --no-check-certificate -O /etc/config-software/guest.sh https://raw.githubusercontent.com/yousuk3/config-software/main/guest.sh
+      bash /etc/config-software/guest.sh 2> /dev/null
+      service guest_wifi enable
+    fi
   fi
   echo -e " \033[1;32mLuCi: http://${input_str_SYSTEM_HOSTNAME}.lan\033[0;39m"
   if [ "$GUEST" = "on" ]; then
