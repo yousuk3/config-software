@@ -26,7 +26,7 @@ if [ "$MODEL_NAME" = "Buffalo WSR-2533DHP2" ]; then
     uci add_list network.@device[0].ports='eth0.2'
 elif [ "$MODEL_NAME" = "Meraki MR52" ]; then
     uci add_list network.@device[0].ports='eth1'
-else
+#else
 #    uci add_list network.@device[0].ports='wan'
 fi
 
