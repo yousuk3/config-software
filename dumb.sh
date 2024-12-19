@@ -30,7 +30,7 @@ else
     uci add_list network.@device[0].ports='wan'
 fi
 
-BRIDGE='lan'
+BRIDGE='bridge'
 uci set network.${BRIDGE}=interface
 uci set network.${BRIDGE}.proto='static'
 uci set network.${BRIDGE}.device=${LAN_DEVICE}
@@ -40,7 +40,7 @@ uci set network.${BRIDGE}.gateway=${GATEWAY}
 uci set network.${BRIDGE}.dns=${GATEWAY}
 uci set network.${BRIDGE}.delegate='0'
 # IPV6
-BRIDGE6='lan6'
+BRIDGE6='bridge6'
 uci set network.${BRIDGE6}=interface
 uci set network.${BRIDGE6}.proto='dhcpv6'
 uci set network.${BRIDGE6}.device=@${BRIDGE}
